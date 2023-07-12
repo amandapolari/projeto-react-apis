@@ -3,15 +3,17 @@ import styled from 'styled-components';
 export const ContainerHeader = styled.div`
     padding: 2vh;
     background-color: #ffffff;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template: 1fr / 1fr 1fr 1fr;
+    justify-content: center;
     align-items: center;
     height: 10vh;
 `;
 
 export const ContainerButtonBack = styled.div`
+    grid-column: 1 / 2;
+    grid-row: 1/ 2;
     display: flex;
-    justify-content: space-between;
     align-items: center;
 `;
 
@@ -33,9 +35,12 @@ export const ButtonBack = styled.button`
 
 export const ImgLogo = styled.img`
     height: 10vh;
+    grid-column: 2 / 3;
+    justify-self: center;
 `;
 
 export const ButtonPokedex = styled.button`
+    grid-column: 3 / 4;
     border: none;
     color: #fff;
     font-family: 'Poppins';
@@ -45,7 +50,7 @@ export const ButtonPokedex = styled.button`
     border-radius: 8px;
     background: #33a4f5;
     padding: 1vh 1.2vh;
-    justify-content: center;
+    margin-left: auto;
     align-items: center;
 `;
 
@@ -57,8 +62,9 @@ export const DeleteFromPokedex = styled.button`
     font-size: 2.3vh;
     height: 7vh;
     border-radius: 8px;
-    background: #FF6262;;
+    background: #ff6262;
     padding: 1vh 1.2vh;
+    margin-left: auto;
     justify-content: center;
     align-items: center;
 `;
