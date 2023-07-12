@@ -1,12 +1,23 @@
 import React from 'react';
-import { ContainerHeader } from './HeaderStyle';
+import {
+    ButtonBack,
+    ButtonPokedex,
+    ContainerButtonBack,
+    ContainerHeader,
+    ImgBack,
+    ImgLogo,
+} from './HeaderStyle';
 import images from '../../assets/importImages';
 
 const Header = () => {
     return (
         <ContainerHeader>
-            <img src={images.image1} alt="Imagem 1" />
-            <p>HEADER</p>
+            <ContainerButtonBack>
+                <ImgBack src={images.back} alt="Imagem Back" />
+                <ButtonBack>Todos Pokémons</ButtonBack>
+            </ContainerButtonBack>
+            <ImgLogo src={images.logo} alt="Imagem Logo" />
+            <ButtonPokedex>Pokédex</ButtonPokedex>
         </ContainerHeader>
     );
 };

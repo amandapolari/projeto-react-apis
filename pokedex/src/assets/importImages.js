@@ -1,7 +1,9 @@
-import image1 from './images/image1.png';
+import logo from './images/logo.png';
+import back from './images/back.png';
 
 const images = {
-    image1,
+    logo,
+    back,
 };
 
 export default images;
