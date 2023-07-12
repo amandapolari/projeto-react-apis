@@ -4,6 +4,7 @@ import {
     ButtonPokedex,
     ContainerButtonBack,
     ContainerHeader,
+    DeleteFromPokedex,
     ImgBack,
     ImgLogo,
 } from './HeaderStyle';
@@ -18,6 +19,7 @@ const Header = () => {
             </ContainerButtonBack>
             <ImgLogo src={images.logo} alt="Imagem Logo" />
             <ButtonPokedex>Pokédex</ButtonPokedex>
+            <DeleteFromPokedex>Excluir da Pokédex</DeleteFromPokedex>
         </ContainerHeader>
     );
 };

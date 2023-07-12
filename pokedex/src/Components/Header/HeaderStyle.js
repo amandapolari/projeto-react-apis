@@ -42,9 +42,22 @@ export const ButtonPokedex = styled.button`
     font-weight: 700;
     font-size: 2.3vh;
     height: 7vh;
-    width: 15vw;
     border-radius: 8px;
     background: #33a4f5;
+    padding: 1vh 1.2vh;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const DeleteFromPokedex = styled.button`
+    border: none;
+    color: #fff;
+    font-family: 'Poppins';
+    font-weight: 400;
+    font-size: 2.3vh;
+    height: 7vh;
+    border-radius: 8px;
+    background: #FF6262;;
     padding: 1vh 1.2vh;
     justify-content: center;
     align-items: center;
