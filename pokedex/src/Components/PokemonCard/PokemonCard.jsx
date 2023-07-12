@@ -1,11 +1,11 @@
 import React from 'react';
 import { ContainerPokemonCard } from './PokemonCardStyle';
 
-const PokemonCard = ({ ShowDetails }) => {
+const PokemonCard = ({ presentationChangeForAllDetails }) => {
     return (
         <ContainerPokemonCard>
             <p>POKEMON CARD</p>
-            <button onClick={ShowDetails}>Detalhes</button>
+            <button onClick={presentationChangeForAllDetails}>Detalhes</button>
         </ContainerPokemonCard>
     );
 };

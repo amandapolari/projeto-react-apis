@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './AppStyle.js';
 import { ContainerApp } from './AppStyle.js';
 import Header from './Components/Header/Header.jsx';
@@ -8,16 +8,25 @@ import PokemonDetailPage from './Pages/PokemonDetailPage/PokemonDetailPage.jsx';
 import PokemonListPage from './Pages/PokemonListPage/PokemonListPage.jsx';
 
 function App() {
-    // Controles para Header:
+    // Lógica para a mudança de estado da apresentação dos botões do Header
     const [controlStateShowAllPokemons, setControlStateShowAllPokemons] =
         useState(true);
-
     const [controlStateShowPokedex, setControlStateShowPokedex] =
         useState(false);
-
     const [controlStateShowDetail, setControlStateShowDetail] = useState(false);
 
-    const ShowDetails = () => {
+    const presentationChangeForPokedex = () => {
+        setControlStateShowAllPokemons(!controlStateShowAllPokemons);
+        setControlStateShowPokedex(!controlStateShowPokedex);
+    };
+    const presentationChangeForAllPokemons = () => {
+        setControlStateShowAllPokemons(!controlStateShowAllPokemons);
+        setControlStateShowPokedex(!controlStateShowPokedex);
+        if (controlStateShowDetail) {
+            setControlStateShowDetail(!controlStateShowDetail);
+        }
+    };
+    const presentationChangeForAllDetails = () => {
         setControlStateShowDetail(!controlStateShowDetail);
         setControlStateShowAllPokemons(false);
         setControlStateShowPokedex(true);
@@ -32,9 +41,17 @@ function App() {
                 setControlStateShowPokedex={setControlStateShowPokedex}
                 setControlStateShowDetail={setControlStateShowDetail}
                 controlStateShowDetail={controlStateShowDetail}
+                presentationChangeForPokedex={presentationChangeForPokedex}
+                presentationChangeForAllPokemons={
+                    presentationChangeForAllPokemons
+                }
             />
 
-            <PokemonCard ShowDetails={ShowDetails} />
+            <PokemonCard
+                presentationChangeForAllDetails={
+                    presentationChangeForAllDetails
+                }
+            />
             <PokedexPage />
             <PokemonDetailPage />
             <PokemonListPage />

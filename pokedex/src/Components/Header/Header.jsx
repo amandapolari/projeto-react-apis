@@ -12,25 +12,10 @@ import images from '../../assets/importImages';
 
 const Header = ({
     controlStateShowAllPokemons,
-    setControlStateShowAllPokemons,
-    controlStateShowPokedex,
-    setControlStateShowPokedex,
-    setControlStateShowDetail,
     controlStateShowDetail,
+    presentationChangeForPokedex,
+    presentationChangeForAllPokemons,
 }) => {
-    const presentationChangeForPokedex = () => {
-        setControlStateShowAllPokemons(!controlStateShowAllPokemons);
-        setControlStateShowPokedex(!controlStateShowPokedex);
-    };
-
-    const presentationChangeForAllPokemons = () => {
-        setControlStateShowAllPokemons(!controlStateShowAllPokemons);
-        setControlStateShowPokedex(!controlStateShowPokedex);
-        if (controlStateShowDetail) {
-            setControlStateShowDetail(!controlStateShowDetail);
-        }
-    };
-
     const ShowButtonBack = () => {
         return (
             <ContainerButtonBack>
