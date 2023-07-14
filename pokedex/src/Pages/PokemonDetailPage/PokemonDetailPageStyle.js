@@ -1,15 +1,17 @@
 import styled from 'styled-components';
 
 export const ContainerPokemonDetailPage = styled.div`
-    padding: 1vh;
-    border: 1px solid lightslategray;
-    margin: 0.1vh;
+    height: 86vh;
     background-color: lightseagreen;
 `;
 
+export const NamePageDetails = styled.p`
+    margin: 0;
+    padding: 1vh;
+`;
+
 export const ContainerListCardDetails = styled.div`
-    padding: 2.5vh 20vh 20vh 20vh;
-    height: 72vh;
+    padding: 2.5vh 20vh 2vh 20vh;
     display: grid;
     grid-template: 1fr 1fr 1fr 1fr / 1fr 1fr 1.2fr;
     gap: 6vh;

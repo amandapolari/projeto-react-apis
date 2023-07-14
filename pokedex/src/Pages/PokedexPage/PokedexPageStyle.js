@@ -2,13 +2,18 @@ import styled from 'styled-components';
 
 export const ContainerListCardPokedex = styled.div`
     display: flex;
-    height: 72vh;
     justify-content: space-evenly;
 `;
 
 export const ContainerPokedexPage = styled.div`
-    padding: 1vh;
-    border: 1px solid lightslategray;
-    margin: 0.1vh;
     background-color: lightgreen;
+    height: 86vh;
+`;
+
+export const NamePagePokedex = styled.p`
+    margin: 0;
+    padding: 1vh;
+`;
+export const TitlePagePokedex = styled.h1`
+    padding: 1vh;
 `;

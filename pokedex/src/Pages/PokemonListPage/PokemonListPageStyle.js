@@ -1,14 +1,19 @@
 import styled from 'styled-components';
 
 export const ContainerPokemonListPage = styled.div`
-    border: 1px solid lightslategray;
-    margin: 0.1vh;
     background-color: lightgoldenrodyellow;
-    padding: 1vh;
+    height: 86vh;
 `;
 
 export const ContainerListCardPokemon = styled.div`
     display: flex;
-    height: 72vh;
     justify-content: space-evenly;
+`;
+
+export const NamePageHome = styled.p`
+    margin: 0;
+    padding: 1vh;
+`;
+export const TitlePageHome = styled.h1`
+    padding: 1vh;
 `;

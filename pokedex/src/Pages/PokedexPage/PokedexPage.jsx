@@ -2,47 +2,53 @@ import React from 'react';
 import {
     ContainerListCardPokedex,
     ContainerPokedexPage,
+    NamePagePokedex,
+    TitlePagePokedex,
 } from './PokedexPageStyle';
 import PokemonCard from '../../Components/PokemonCard/PokemonCard';
+import Header from '../../Components/Header/Header';
 
 const PokedexPage = ({ presentationChangeForAllDetails }) => {
     return (
-        <ContainerPokedexPage>
-            <p>[POKEDEX] POKEDEX PAGE</p>
-            <p>Meus Pokémons</p>
-            <ContainerListCardPokedex>
-                <PokemonCard
-                    presentationChangeForAllDetails={
-                        presentationChangeForAllDetails
-                    }
-                />
-                <PokemonCard
-                    presentationChangeForAllDetails={
-                        presentationChangeForAllDetails
-                    }
-                />
-                <PokemonCard
-                    presentationChangeForAllDetails={
-                        presentationChangeForAllDetails
-                    }
-                />
-                <PokemonCard
-                    presentationChangeForAllDetails={
-                        presentationChangeForAllDetails
-                    }
-                />
-                <PokemonCard
-                    presentationChangeForAllDetails={
-                        presentationChangeForAllDetails
-                    }
-                />
-                <PokemonCard
-                    presentationChangeForAllDetails={
-                        presentationChangeForAllDetails
-                    }
-                />
-            </ContainerListCardPokedex>
-        </ContainerPokedexPage>
+        <>
+            <Header />
+            <ContainerPokedexPage>
+                <NamePagePokedex>[POKEDEX] POKEDEX PAGE</NamePagePokedex>
+                <TitlePagePokedex>Meus Pokémons</TitlePagePokedex>
+                <ContainerListCardPokedex>
+                    <PokemonCard
+                        presentationChangeForAllDetails={
+                            presentationChangeForAllDetails
+                        }
+                    />
+                    <PokemonCard
+                        presentationChangeForAllDetails={
+                            presentationChangeForAllDetails
+                        }
+                    />
+                    <PokemonCard
+                        presentationChangeForAllDetails={
+                            presentationChangeForAllDetails
+                        }
+                    />
+                    <PokemonCard
+                        presentationChangeForAllDetails={
+                            presentationChangeForAllDetails
+                        }
+                    />
+                    <PokemonCard
+                        presentationChangeForAllDetails={
+                            presentationChangeForAllDetails
+                        }
+                    />
+                    <PokemonCard
+                        presentationChangeForAllDetails={
+                            presentationChangeForAllDetails
+                        }
+                    />
+                </ContainerListCardPokedex>
+            </ContainerPokedexPage>
+        </>
     );
 };
 
