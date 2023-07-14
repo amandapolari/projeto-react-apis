@@ -5,6 +5,12 @@ export const ContainerPokemonDetailPage = styled.div`
     background-color: lightseagreen;
 `;
 
+export const ContainerNameAndButton = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding: 1vh;
+`;
+
 export const NamePageDetails = styled.p`
     margin: 0;
     padding: 1vh;

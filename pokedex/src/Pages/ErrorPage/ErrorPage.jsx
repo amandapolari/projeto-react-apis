@@ -1,12 +1,24 @@
 import React from 'react';
+import images from '../../assets/importImages';
 import Header from '../../Components/Header/Header';
+import {
+    ContainerErrorPage,
+    GifImage,
+    GifImageContainer,
+    TituloError,
+} from './ErrorPageStyle';
 
 const ErrorPage = () => {
     return (
-        <div>
+        <>
             <Header />
-            <p>Página Não Encontrada</p>
-        </div>
+            <ContainerErrorPage>
+                <TituloError>Desculpa, não encontrei a sua página!</TituloError>
+                <GifImageContainer>
+                    <GifImage src={images.pikachu} />
+                </GifImageContainer>
+            </ContainerErrorPage>
+        </>
     );
 };
 

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
     ButtonBack,
     ButtonPokedex,
@@ -9,18 +10,29 @@ import {
     ImgLogo,
 } from './HeaderStyle';
 import images from '../../assets/importImages';
+import { goToPokedex, goToHome } from '../../routes/coordinator';
 
-const Header = ({
-    controlStateShowAllPokemons,
-    controlStateShowDetail,
-    presentationChangeForPokedex,
-    presentationChangeForAllPokemons,
-}) => {
+const Header = () => {
+    const location = useLocation();
+    const navegate = useNavigate();
+    const pathname = location.pathname;
+    const [isErrorPage, setIsErrorPage] = useState(false);
+
+    useEffect(() => {
+        pathname !== '/' && pathname !== '/pokedex' && pathname !== '/details'
+            ? setIsErrorPage(true)
+            : setIsErrorPage(false);
+    }, [pathname]);
+
     const ShowButtonBack = () => {
         return (
             <ContainerButtonBack>
                 <ImgBack src={images.back} alt="Imagem Back" />
-                <ButtonBack onClick={presentationChangeForAllPokemons}>
+                <ButtonBack
+                    onClick={() => {
+                        goToHome(navegate);
+                    }}
+                >
                     Todos Pokémons
                 </ButtonBack>
             </ContainerButtonBack>
@@ -29,7 +41,11 @@ const Header = ({
 
     const ShowButtonPokedex = () => {
         return (
-            <ButtonPokedex onClick={presentationChangeForPokedex}>
+            <ButtonPokedex
+                onClick={() => {
+                    goToPokedex(navegate);
+                }}
+            >
                 Pokédex
             </ButtonPokedex>
         );
@@ -42,10 +58,11 @@ const Header = ({
     return (
         <ContainerHeader>
             <ImgLogo src={images.logo} alt="Imagem Logo" />
-            {controlStateShowAllPokemons
-                ? ShowButtonPokedex()
-                : ShowButtonBack()}
-            {controlStateShowDetail ? ShowDeleteFromPokedex() : ''}
+            {pathname === '/' ? ShowButtonPokedex() : ''}
+            {pathname === '/pokedex' ? ShowButtonBack() : ''}
+            {pathname === '/details' ? ShowButtonBack() : ''}
+            {pathname === '/details' ? ShowDeleteFromPokedex() : ''}
+            {isErrorPage ? ShowButtonBack() : ''}
         </ContainerHeader>
     );
 };

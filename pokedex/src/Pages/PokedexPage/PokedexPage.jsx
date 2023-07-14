@@ -8,7 +8,7 @@ import {
 import PokemonCard from '../../Components/PokemonCard/PokemonCard';
 import Header from '../../Components/Header/Header';
 
-const PokedexPage = ({ presentationChangeForAllDetails }) => {
+const PokedexPage = () => {
     return (
         <>
             <Header />
@@ -16,36 +16,12 @@ const PokedexPage = ({ presentationChangeForAllDetails }) => {
                 <NamePagePokedex>[POKEDEX] POKEDEX PAGE</NamePagePokedex>
                 <TitlePagePokedex>Meus Pokémons</TitlePagePokedex>
                 <ContainerListCardPokedex>
-                    <PokemonCard
-                        presentationChangeForAllDetails={
-                            presentationChangeForAllDetails
-                        }
-                    />
-                    <PokemonCard
-                        presentationChangeForAllDetails={
-                            presentationChangeForAllDetails
-                        }
-                    />
-                    <PokemonCard
-                        presentationChangeForAllDetails={
-                            presentationChangeForAllDetails
-                        }
-                    />
-                    <PokemonCard
-                        presentationChangeForAllDetails={
-                            presentationChangeForAllDetails
-                        }
-                    />
-                    <PokemonCard
-                        presentationChangeForAllDetails={
-                            presentationChangeForAllDetails
-                        }
-                    />
-                    <PokemonCard
-                        presentationChangeForAllDetails={
-                            presentationChangeForAllDetails
-                        }
-                    />
+                    <PokemonCard />
+                    <PokemonCard />
+                    <PokemonCard />
+                    <PokemonCard />
+                    <PokemonCard />
+                    <PokemonCard />
                 </ContainerListCardPokedex>
             </ContainerPokedexPage>
         </>

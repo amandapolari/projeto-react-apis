@@ -6,14 +6,20 @@ import {
     ContainerPokemonCard,
     NamePokemonCard,
 } from './PokemonCardStyle';
+import { goToDetails } from '../../routes/coordinator';
+import { useNavigate } from 'react-router-dom';
 
-const PokemonCard = ({ presentationChangeForAllDetails }) => {
+const PokemonCard = () => {
+    const navegate = useNavigate();
+
     return (
         <ContainerPokemonCard>
             <NamePokemonCard>POKE CARD</NamePokemonCard>
             <ContainerButtonPokemonCard>
                 <ButtonDetailPokemonCard
-                    onClick={presentationChangeForAllDetails}
+                    onClick={() => {
+                        goToDetails(navegate);
+                    }}
                 >
                     Detalhes
                 </ButtonDetailPokemonCard>

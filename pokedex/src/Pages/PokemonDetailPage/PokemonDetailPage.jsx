@@ -4,6 +4,7 @@ import {
     ContainerImgFront,
     ContainerListCardDetails,
     ContainerMoves,
+    ContainerNameAndButton,
     ContainerPokemonDetailPage,
     ContainerStats,
     ContainerTypes,
@@ -14,9 +15,13 @@ import Header from '../../Components/Header/Header';
 const PokemonDetailPage = () => {
     return (
         <>
-        <Header/>
+            <Header />
             <ContainerPokemonDetailPage>
-                <NamePageDetails>[PÁGINA DE DETALHES] POKEMON DETAIL PAGE</NamePageDetails>
+                <ContainerNameAndButton>
+                    <NamePageDetails>
+                        [PÁGINA DE DETALHES] POKEMON DETAIL PAGE
+                    </NamePageDetails>
+                </ContainerNameAndButton>
                 <ContainerListCardDetails>
                     <ContainerImgFront>Imagem Frontal</ContainerImgFront>
                     <ContainerImgBack>Imagem Posterior</ContainerImgBack>

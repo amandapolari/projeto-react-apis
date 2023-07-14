@@ -8,7 +8,7 @@ import {
 import PokemonCard from '../../Components/PokemonCard/PokemonCard';
 import Header from '../../Components/Header/Header';
 
-const PokemonListPage = ({ presentationChangeForAllDetails }) => {
+const PokemonListPage = () => {
     return (
         <>
             <Header />
@@ -16,36 +16,12 @@ const PokemonListPage = ({ presentationChangeForAllDetails }) => {
                 <NamePageHome>[HOME] POKEMON LIST PAGE</NamePageHome>
                 <TitlePageHome>Todos os Pokémons</TitlePageHome>
                 <ContainerListCardPokemon>
-                    <PokemonCard
-                        presentationChangeForAllDetails={
-                            presentationChangeForAllDetails
-                        }
-                    />
-                    <PokemonCard
-                        presentationChangeForAllDetails={
-                            presentationChangeForAllDetails
-                        }
-                    />
-                    <PokemonCard
-                        presentationChangeForAllDetails={
-                            presentationChangeForAllDetails
-                        }
-                    />
-                    <PokemonCard
-                        presentationChangeForAllDetails={
-                            presentationChangeForAllDetails
-                        }
-                    />
-                    <PokemonCard
-                        presentationChangeForAllDetails={
-                            presentationChangeForAllDetails
-                        }
-                    />
-                    <PokemonCard
-                        presentationChangeForAllDetails={
-                            presentationChangeForAllDetails
-                        }
-                    />
+                    <PokemonCard />
+                    <PokemonCard />
+                    <PokemonCard />
+                    <PokemonCard />
+                    <PokemonCard />
+                    <PokemonCard />
                 </ContainerListCardPokemon>
             </ContainerPokemonListPage>
         </>
