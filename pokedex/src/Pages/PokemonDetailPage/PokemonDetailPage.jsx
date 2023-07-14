@@ -4,7 +4,7 @@ import { ContainerPokemonDetailPage } from './PokemonDetailPageStyle';
 const PokemonDetailPage = () => {
     return (
         <ContainerPokemonDetailPage>
-            <p>POKEMON DETAIL PAGE</p>
+            <p>[PÁGINA DE DETALHES] POKEMON DETAIL PAGE</p>
         </ContainerPokemonDetailPage>
     );
 };

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './AppStyle.js';
 import { ContainerApp } from './AppStyle.js';
 import Header from './Components/Header/Header.jsx';
-import PokemonCard from './Components/PokemonCard/PokemonCard.jsx';
+// import PokemonCard from './Components/PokemonCard/PokemonCard.jsx';
 import PokedexPage from './Pages/PokedexPage/PokedexPage.jsx';
 import PokemonDetailPage from './Pages/PokemonDetailPage/PokemonDetailPage.jsx';
 import PokemonListPage from './Pages/PokemonListPage/PokemonListPage.jsx';
@@ -21,7 +21,9 @@ function App() {
     };
     const presentationChangeForAllPokemons = () => {
         setControlStateShowAllPokemons(!controlStateShowAllPokemons);
-        setControlStateShowPokedex(!controlStateShowPokedex);
+        if (controlStateShowPokedex) {
+            setControlStateShowPokedex(!controlStateShowPokedex);
+        }
         if (controlStateShowDetail) {
             setControlStateShowDetail(!controlStateShowDetail);
         }
@@ -29,7 +31,9 @@ function App() {
     const presentationChangeForAllDetails = () => {
         setControlStateShowDetail(!controlStateShowDetail);
         setControlStateShowAllPokemons(false);
-        setControlStateShowPokedex(true);
+        if (controlStateShowPokedex) {
+            setControlStateShowPokedex(!controlStateShowPokedex);
+        }
     };
 
     return (
@@ -47,14 +51,39 @@ function App() {
                 }
             />
 
-            <PokemonCard
+            {controlStateShowAllPokemons ? (
+                <PokemonListPage
+                    presentationChangeForAllDetails={
+                        presentationChangeForAllDetails
+                    }
+                />
+            ) : (
+                ''
+            )}
+            {/* <PokemonListPage
                 presentationChangeForAllDetails={
                     presentationChangeForAllDetails
                 }
-            />
-            <PokedexPage />
-            <PokemonDetailPage />
-            <PokemonListPage />
+            /> */}
+
+            {controlStateShowPokedex ? (
+                <PokedexPage
+                    presentationChangeForAllDetails={
+                        presentationChangeForAllDetails
+                    }
+                />
+            ) : (
+                ''
+            )}
+
+            {/* <PokedexPage
+                presentationChangeForAllDetails={
+                    presentationChangeForAllDetails
+                }
+            /> */}
+
+            {controlStateShowDetail ? <PokemonDetailPage /> : ''}
+            {/* <PokemonDetailPage /> */}
         </ContainerApp>
     );
 }

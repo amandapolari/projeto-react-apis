@@ -1,10 +1,16 @@
 import React from 'react';
 import { ContainerPokemonListPage } from './PokemonListPageStyle';
+import PokemonCard from '../../Components/PokemonCard/PokemonCard';
 
-const PokemonListPage = () => {
+const PokemonListPage = ({ presentationChangeForAllDetails }) => {
     return (
         <ContainerPokemonListPage>
-            <p>POKEMON LIST PAGE</p>
+            <p>[HOME] POKEMON LIST PAGE</p>
+            <PokemonCard
+                presentationChangeForAllDetails={
+                    presentationChangeForAllDetails
+                }
+            />
         </ContainerPokemonListPage>
     );
 };
