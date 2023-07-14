@@ -1,10 +1,24 @@
 import React from 'react';
-import { ContainerPokemonCard } from './PokemonCardStyle';
+import {
+    ButtonAddPokemonCard,
+    ButtonDetailPokemonCard,
+    ContainerButtonPokemonCard,
+    ContainerPokemonCard,
+    NamePokemonCard,
+} from './PokemonCardStyle';
 
-const PokemonCard = () => {
+const PokemonCard = ({ presentationChangeForAllDetails }) => {
     return (
         <ContainerPokemonCard>
-            <p>POKEMON CARD</p>
+            <NamePokemonCard>POKE CARD</NamePokemonCard>
+            <ContainerButtonPokemonCard>
+                <ButtonDetailPokemonCard
+                    onClick={presentationChangeForAllDetails}
+                >
+                    Detalhes
+                </ButtonDetailPokemonCard>
+                <ButtonAddPokemonCard>Adicionar</ButtonAddPokemonCard>
+            </ContainerButtonPokemonCard>
         </ContainerPokemonCard>
     );
 };
