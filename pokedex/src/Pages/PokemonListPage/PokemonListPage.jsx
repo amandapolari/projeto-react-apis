@@ -1,16 +1,47 @@
 import React from 'react';
-import { ContainerPokemonListPage } from './PokemonListPageStyle';
+import {
+    ContainerListCardPokemon,
+    ContainerPokemonListPage,
+} from './PokemonListPageStyle';
 import PokemonCard from '../../Components/PokemonCard/PokemonCard';
 
 const PokemonListPage = ({ presentationChangeForAllDetails }) => {
     return (
         <ContainerPokemonListPage>
             <p>[HOME] POKEMON LIST PAGE</p>
-            <PokemonCard
-                presentationChangeForAllDetails={
-                    presentationChangeForAllDetails
-                }
-            />
+            <p>Todos os Pokémons</p>
+            <ContainerListCardPokemon>
+                <PokemonCard
+                    presentationChangeForAllDetails={
+                        presentationChangeForAllDetails
+                    }
+                />
+                <PokemonCard
+                    presentationChangeForAllDetails={
+                        presentationChangeForAllDetails
+                    }
+                />
+                <PokemonCard
+                    presentationChangeForAllDetails={
+                        presentationChangeForAllDetails
+                    }
+                />
+                <PokemonCard
+                    presentationChangeForAllDetails={
+                        presentationChangeForAllDetails
+                    }
+                />
+                <PokemonCard
+                    presentationChangeForAllDetails={
+                        presentationChangeForAllDetails
+                    }
+                />
+                <PokemonCard
+                    presentationChangeForAllDetails={
+                        presentationChangeForAllDetails
+                    }
+                />
+            </ContainerListCardPokemon>
         </ContainerPokemonListPage>
     );
 };

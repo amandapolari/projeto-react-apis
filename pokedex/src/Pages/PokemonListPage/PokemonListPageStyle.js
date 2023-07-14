@@ -6,3 +6,9 @@ export const ContainerPokemonListPage = styled.div`
     background-color: lightgoldenrodyellow;
     padding: 1vh;
 `;
+
+export const ContainerListCardPokemon = styled.div`
+    display: flex;
+    height: 72vh;
+    justify-content: space-evenly;
+`;
