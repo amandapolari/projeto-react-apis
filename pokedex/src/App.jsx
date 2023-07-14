@@ -6,6 +6,7 @@ import Header from './Components/Header/Header.jsx';
 import PokedexPage from './Pages/PokedexPage/PokedexPage.jsx';
 import PokemonDetailPage from './Pages/PokemonDetailPage/PokemonDetailPage.jsx';
 import PokemonListPage from './Pages/PokemonListPage/PokemonListPage.jsx';
+import Router from './routes/Router';
 
 function App() {
     // Lógica para a mudança de estado da apresentação dos botões do Header
@@ -38,7 +39,10 @@ function App() {
 
     return (
         <ContainerApp>
-            <Header
+            <Router />
+
+            {/* Comentado para utilização das rotas */}
+            {/* <Header
                 controlStateShowAllPokemons={controlStateShowAllPokemons}
                 setControlStateShowAllPokemons={setControlStateShowAllPokemons}
                 controlStateShowPokedex={controlStateShowPokedex}
@@ -49,9 +53,11 @@ function App() {
                 presentationChangeForAllPokemons={
                     presentationChangeForAllPokemons
                 }
-            />
+            /> */}
+            {/* --- */}
 
-            {controlStateShowAllPokemons ? (
+            {/* Comentado para utilização das rotas */}
+            {/* {controlStateShowAllPokemons ? (
                 <PokemonListPage
                     presentationChangeForAllDetails={
                         presentationChangeForAllDetails
@@ -59,14 +65,17 @@ function App() {
                 />
             ) : (
                 ''
-            )}
+            )} */}
+            {/* --- */}
+
             {/* <PokemonListPage
                 presentationChangeForAllDetails={
                     presentationChangeForAllDetails
                 }
             /> */}
 
-            {controlStateShowPokedex ? (
+            {/* Comentado para utilização das rotas */}
+            {/* {controlStateShowPokedex ? (
                 <PokedexPage
                     presentationChangeForAllDetails={
                         presentationChangeForAllDetails
@@ -74,7 +83,8 @@ function App() {
                 />
             ) : (
                 ''
-            )}
+            )} */}
+            {/* --- */}
 
             {/* <PokedexPage
                 presentationChangeForAllDetails={
@@ -82,7 +92,10 @@ function App() {
                 }
             /> */}
 
-            {controlStateShowDetail ? <PokemonDetailPage /> : ''}
+            {/* Comentado para utilização das rotas */}
+            {/* {controlStateShowDetail ? <PokemonDetailPage /> : ''} */}
+            {/* --- */}
+
             {/* <PokemonDetailPage /> */}
         </ContainerApp>
     );
