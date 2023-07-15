@@ -14,7 +14,6 @@ export const NamePokemonCard = styled.p`
     grid-column: 1 / 3;
     grid-row: 1 / 2;
     height: 100%;
-    /* border: 1px solid lightslategray; */
     justify-content: center;
     align-items: center;
 `;
@@ -24,7 +23,6 @@ export const ContainerButtonPokemonCard = styled.div`
     grid-column: 1 / 3;
     grid-row: 2 / 3;
     align-items: flex-end;
-    /* border: 1px solid lightslategray; */
 `;
 
 export const ButtonDetailPokemonCard = styled.button`

@@ -2,47 +2,29 @@ import React from 'react';
 import {
     ContainerListCardPokemon,
     ContainerPokemonListPage,
+    NamePageHome,
+    TitlePageHome,
 } from './PokemonListPageStyle';
 import PokemonCard from '../../Components/PokemonCard/PokemonCard';
+import Header from '../../Components/Header/Header';
 
-const PokemonListPage = ({ presentationChangeForAllDetails }) => {
+const PokemonListPage = () => {
     return (
-        <ContainerPokemonListPage>
-            <p>[HOME] POKEMON LIST PAGE</p>
-            <p>Todos os Pokémons</p>
-            <ContainerListCardPokemon>
-                <PokemonCard
-                    presentationChangeForAllDetails={
-                        presentationChangeForAllDetails
-                    }
-                />
-                <PokemonCard
-                    presentationChangeForAllDetails={
-                        presentationChangeForAllDetails
-                    }
-                />
-                <PokemonCard
-                    presentationChangeForAllDetails={
-                        presentationChangeForAllDetails
-                    }
-                />
-                <PokemonCard
-                    presentationChangeForAllDetails={
-                        presentationChangeForAllDetails
-                    }
-                />
-                <PokemonCard
-                    presentationChangeForAllDetails={
-                        presentationChangeForAllDetails
-                    }
-                />
-                <PokemonCard
-                    presentationChangeForAllDetails={
-                        presentationChangeForAllDetails
-                    }
-                />
-            </ContainerListCardPokemon>
-        </ContainerPokemonListPage>
+        <>
+            <Header />
+            <ContainerPokemonListPage>
+                <NamePageHome>[HOME] POKEMON LIST PAGE</NamePageHome>
+                <TitlePageHome>Todos os Pokémons</TitlePageHome>
+                <ContainerListCardPokemon>
+                    <PokemonCard />
+                    <PokemonCard />
+                    <PokemonCard />
+                    <PokemonCard />
+                    <PokemonCard />
+                    <PokemonCard />
+                </ContainerListCardPokemon>
+            </ContainerPokemonListPage>
+        </>
     );
 };
 
