@@ -3,25 +3,28 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { BASE_URL } from '../constants/constants';
 
-const useRequestData = () => {
+const useRequestData = (path) => {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
 
     useEffect(() => {
-        axios
-            .get(`${BASE_URL}`)
-            .then((response) => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${BASE_URL}${path}`);
                 setData(response.data.results);
                 setIsLoading(false);
-            })
-            .catch((error) => {
+            } catch (error) {
                 console.log(error);
-                console.log(error.message);
                 setIsLoading(false);
                 setIsError(true);
-            });
-    }, []);
+            }
+        };
+
+        fetchData();
+    }, [path]);
+
     return [data, isLoading, isError];
 };
+
 export default useRequestData;

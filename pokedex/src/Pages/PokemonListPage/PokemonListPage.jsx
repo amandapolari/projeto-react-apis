@@ -12,8 +12,8 @@ import Error from '../../Components/Error/Error';
 import Loading from '../../Components/Error/Error';
 
 const PokemonListPage = () => {
-    const [data, isLoading, isError] = useRequestData();
-    console.log('Resultado', data);
+    const [data, isLoading, isError] = useRequestData('pokemon/');
+    // console.log('Resultado', data[0].url);
     return (
         <>
             <Header />
@@ -21,10 +21,10 @@ const PokemonListPage = () => {
                 <NamePageHome>[HOME] POKEMON LIST PAGE</NamePageHome>
                 <TitlePageHome>Todos os Pokémons</TitlePageHome>
                 <ContainerListCardPokemon>
-                    {isError ? (
-                        <Error />
-                    ) : isLoading ? (
+                    {isLoading ? (
                         <Loading />
+                    ) : isError ? (
+                        <Error />
                     ) : (
                         data.map((pokemon) => {
                             return (
