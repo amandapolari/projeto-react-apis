@@ -7,6 +7,7 @@ export const ContainerPokemonListPage = styled.div`
 
 export const ContainerListCardPokemon = styled.div`
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-evenly;
 `;
 

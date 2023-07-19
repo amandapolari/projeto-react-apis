@@ -2,11 +2,13 @@ import styled from 'styled-components';
 
 export const ContainerPokemonCard = styled.div`
     display: grid;
-    grid-template: 2fr 1fr / 1fr 1fr;
+    grid-template: 2fr 1fr 1fr / 1fr 1fr;
     height: 25vh;
     width: 20vh;
     border: 1px solid lightslategray;
     background-color: lightsalmon;
+    margin-bottom: 1vh;
+    border: solid 5px black;
 `;
 
 export const NamePokemonCard = styled.p`
@@ -18,10 +20,19 @@ export const NamePokemonCard = styled.p`
     align-items: center;
 `;
 
-export const ContainerButtonPokemonCard = styled.div`
+export const NamePokemon = styled.p`
     display: grid;
     grid-column: 1 / 3;
     grid-row: 2 / 3;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const ContainerButtonPokemonCard = styled.div`
+    display: grid;
+    grid-column: 1 / 3;
+    grid-row: 3 / 4;
     align-items: flex-end;
 `;
 
