@@ -12,7 +12,10 @@ const useRequestData = (path) => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`${BASE_URL}${path}`);
-                setData(response.data.results);
+                response.data.results
+                    ? setData(response.data.results)
+                    : setData(response.data);
+                console.log(response.data);
                 setIsLoading(false);
             } catch (error) {
                 console.log(error);
