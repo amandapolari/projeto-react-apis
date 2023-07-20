@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     ButtonAddPokemonCard,
     ButtonDetailPokemonCard,
@@ -11,7 +11,7 @@ import {
 import { goToDetails } from '../../routes/coordinator';
 import { useNavigate } from 'react-router-dom';
 
-const PokemonCard = ({ name, url }) => {
+const PokemonCard = ({ name, url, listNamesPokemons, index, addToPokedex, }) => {
     const navegate = useNavigate();
 
     const pokemonId = url && url.match(/\/(\d+)\//)[1];
@@ -19,11 +19,8 @@ const PokemonCard = ({ name, url }) => {
         ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`
         : '';
 
-    // console.log('imageUrl:', imageUrl);
-    // console.log(pokemonId);
-    // console.log(imageUrl);
-    // console.log(name);
-    // console.log(url);
+        // const adjustedName = name.charAt(0).toLowerCase() + name.slice(1); // Ajustar o nome para começar com letra minúscula
+
 
     return (
         <ContainerPokemonCard>
@@ -38,7 +35,13 @@ const PokemonCard = ({ name, url }) => {
                 >
                     Detalhes
                 </ButtonDetailPokemonCard>
-                <ButtonAddPokemonCard>Adicionar</ButtonAddPokemonCard>
+                <ButtonAddPokemonCard
+                    onClick={() => {
+                        addToPokedex(name);
+                    }}
+                >
+                    Adicionar
+                </ButtonAddPokemonCard>
             </ContainerButtonPokemonCard>
         </ContainerPokemonCard>
     );

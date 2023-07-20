@@ -13,8 +13,9 @@ import Loading from '../../Components/Error/Error';
 
 const PokemonListPage = () => {
     const [data, isLoading, isError] = useRequestData('pokemon/');
-    const [listNamesPokemons, setNamesPokemons] = useState([]);
+    const [listNamesPokemons, setListNamesPokemons] = useState([]);
     const [listUrlsPokemons, setUrlsPokemons] = useState([]);
+    const [listPokemonsPokedex, setPokemonsPokedex] = useState([]);
 
     useEffect(() => {
         const urls = data.map((item) => item.url);
@@ -22,8 +23,22 @@ const PokemonListPage = () => {
             (item) => item.name.charAt(0).toUpperCase() + item.name.slice(1)
         );
         setUrlsPokemons(urls);
-        setNamesPokemons(names);
+        setListNamesPokemons(names);
     }, [data]);
+
+    const addToPokedex = (pokemonName) => {
+        const nameAdjusted = pokemonName.toLowerCase();
+        setPokemonsPokedex((prevList) => [...prevList, nameAdjusted]);
+    };
+
+    const updateListNamesPokemons = (pokemonName) => {
+        setListNamesPokemons((prevList) =>
+            prevList.filter((item) => item !== pokemonName)
+        );
+    };
+
+    console.log(listPokemonsPokedex);
+    console.log(listNamesPokemons);
 
     return (
         <>
@@ -42,6 +57,11 @@ const PokemonListPage = () => {
                                 key={index}
                                 name={pokemonName}
                                 url={listUrlsPokemons[index]}
+                                listNamesPokemons={listNamesPokemons}
+                                addToPokedex={(pokemonName) => {
+                                    addToPokedex(pokemonName);
+                                    updateListNamesPokemons(pokemonName);
+                                }}
                             />
                         ))
                     )}

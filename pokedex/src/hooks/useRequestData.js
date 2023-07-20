@@ -15,10 +15,10 @@ const useRequestData = (path) => {
                 response.data.results
                     ? setData(response.data.results)
                     : setData(response.data);
-                console.log(response.data);
+                // console.log(response.data);
                 setIsLoading(false);
             } catch (error) {
-                console.log(error);
+                // console.log(error);
                 setIsLoading(false);
                 setIsError(true);
             }
