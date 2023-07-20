@@ -8,7 +8,7 @@ export const ContainerPokemonCard = styled.div`
     border: 1px solid lightslategray;
     background-color: lightsalmon;
     margin-bottom: 1vh;
-    border: solid 5px black;
+    justify-content: center;
 `;
 
 export const NamePokemonCard = styled.p`
@@ -42,4 +42,9 @@ export const ButtonDetailPokemonCard = styled.button`
 
 export const ButtonAddPokemonCard = styled.button`
     grid-column: 2 / 3;
+`;
+
+export const ImgPokemons = styled.img`
+    height: 15vh;
+    grid-column: 1 / 3;
 `;

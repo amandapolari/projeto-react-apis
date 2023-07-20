@@ -15,10 +15,6 @@ const PokemonListPage = () => {
     const [data, isLoading, isError] = useRequestData('pokemon/');
     const [listNamesPokemons, setNamesPokemons] = useState([]);
     const [listUrlsPokemons, setUrlsPokemons] = useState([]);
-    const [datasImages] = useRequestData('pokemon/1');
-
-    // Caminho para capturar a imagem:
-    // datasImages.sprites.back_default
 
     useEffect(() => {
         const urls = data.map((item) => item.url);
@@ -34,9 +30,6 @@ const PokemonListPage = () => {
             <Header />
             <ContainerPokemonListPage>
                 <NamePageHome>[HOME] POKEMON LIST PAGE</NamePageHome>
-                {/* Dessa forma carrega na primeira renderização mas quebra se a página for atualizada */}
-                <img src={datasImages.sprites.back_default} alt="" />
-
                 <TitlePageHome>Todos os Pokémons</TitlePageHome>
                 <ContainerListCardPokemon>
                     {isLoading ? (
@@ -44,9 +37,13 @@ const PokemonListPage = () => {
                     ) : isError ? (
                         <Error />
                     ) : (
-                        listNamesPokemons.map((pokemon) => {
-                            return <PokemonCard key={pokemon} name={pokemon} />;
-                        })
+                        listNamesPokemons.map((pokemonName, index) => (
+                            <PokemonCard
+                                key={index}
+                                name={pokemonName}
+                                url={listUrlsPokemons[index]}
+                            />
+                        ))
                     )}
                 </ContainerListCardPokemon>
             </ContainerPokemonListPage>
