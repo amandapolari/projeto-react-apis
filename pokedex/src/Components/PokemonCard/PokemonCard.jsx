@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import useRequestData from '../../hooks/useRequestData';
 import Loading from '../Loading/Loading';
 import Error from '../Error/Error';
+import { getTypes } from '../../utils/ReturnPokemonType';
 
 const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
     const navegate = useNavigate();
@@ -26,6 +27,15 @@ const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
     const [idPokemon, setIdPokemon] = useState('');
     const [dataLoaded, setDataLoaded] = useState(false);
     const listIds = dataId.id;
+    // const listTypes = dataId.type;
+    // console.log(dataId.types);
+
+    const captureTypes = () => {
+        const allTypes = dataId.types;
+        const arrayTypes = allTypes.map((elemento) => elemento.type.name);
+        return arrayTypes;
+        // console.log(arrayTypes);
+    };
 
     useEffect(() => {
         if (listIds) {
@@ -37,6 +47,8 @@ const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
     useEffect(() => {
         if (dataLoaded) {
             idCorrected();
+            captureTypes();
+            console.log(captureTypes());
         }
     }, [dataLoaded]);
 
@@ -59,6 +71,8 @@ const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
             setIdPokemon(idCorrigido);
         }
     };
+
+    // console.log(listTypes);
 
     return (
         <ContainerPokemonCard>
