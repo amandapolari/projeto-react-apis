@@ -17,6 +17,7 @@ import useRequestData from '../../hooks/useRequestData';
 import Loading from '../Loading/Loading';
 import Error from '../Error/Error';
 import { getTypes } from '../../utils/ReturnPokemonType';
+import { getColors } from '../../utils/ReturnCardColor';
 
 const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
     const navegate = useNavigate();
@@ -63,8 +64,11 @@ const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
                 case 2:
                     idCorrigido = `#0${idAjustado}`;
                     break;
-                default:
+                case 3:
                     idCorrigido = `#${idAjustado}`;
+                    break;
+                default:
+                    idCorrigido = `${idAjustado}`;
                     break;
             }
             setIdPokemon(idCorrigido);
@@ -72,7 +76,7 @@ const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
     };
 
     return (
-        <ContainerPokemonCard>
+        <ContainerPokemonCard color={getColors(listTypes[0])}>
             {isLoading ? (
                 <Loading />
             ) : isError ? (
@@ -83,7 +87,6 @@ const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
                     <NamePokemon>{name}</NamePokemon>
                     <ContainerTypes>
                         {listTypes.map((type) => {
-                            console.log(type);
                             return (
                                 <ImgType
                                     key={type}

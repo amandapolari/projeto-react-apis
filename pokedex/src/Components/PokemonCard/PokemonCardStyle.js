@@ -6,7 +6,7 @@ export const ContainerPokemonCard = styled.div`
     height: 30vh;
     width: 20vh;
     border: 1px solid lightslategray;
-    background-color: lightsalmon;
+    background-color: ${({ color }) => color};
     margin-bottom: 5vh;
     justify-content: center;
 `;
