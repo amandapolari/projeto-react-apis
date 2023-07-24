@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 export const ContainerPokemonCard = styled.div`
     display: grid;
-    grid-template: 1fr 1fr 1fr 1fr / 1fr 1fr;
-    height: 25vh;
+    grid-template: 1fr 1fr 1fr 1fr 1fr / 1fr 1fr;
+    height: 30vh;
     width: 20vh;
     border: 1px solid lightslategray;
     background-color: lightsalmon;
-    margin-bottom: 1vh;
+    margin-bottom: 5vh;
     justify-content: center;
 `;
 
@@ -27,15 +27,29 @@ export const NamePokemon = styled.p`
     align-items: center;
 `;
 
+export const ImgType = styled.img`
+    height: 3vh;
+    grid-row: 3 / 4;
+    grid-column: 1 / 3;
+`;
+
+export const ContainerTypes = styled.div`
+    display: flex;
+    width: 100%;
+    /* border: solid black 2px; */
+    grid-row: 3 / 4;
+    grid-column: 1 / 3;
+`;
+
 export const ImgPokemons = styled.img`
     height: 15vh;
-    grid-row: 3 / 4;
+    grid-row: 4 / 5;
     grid-column: 1 / 3;
 `;
 
 export const ContainerButtonPokemonCard = styled.div`
     display: grid;
-    grid-row: 4 / 5;
+    grid-row: 5 / 6;
     grid-column: 1 / 3;
     align-items: flex-end;
 `;

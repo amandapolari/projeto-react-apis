@@ -6,8 +6,10 @@ import {
     ContainerButtonPokemonCard,
     ContainerPokemonCard,
     ImgPokemons,
+    ImgType,
     NamePokemon,
     ParagraphPokemonId,
+    ContainerTypes,
 } from './PokemonCardStyle';
 import { goToDetails } from '../../routes/coordinator';
 import { useNavigate } from 'react-router-dom';
@@ -27,14 +29,12 @@ const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
     const [idPokemon, setIdPokemon] = useState('');
     const [dataLoaded, setDataLoaded] = useState(false);
     const listIds = dataId.id;
-    // const listTypes = dataId.type;
-    // console.log(dataId.types);
+    const [listTypes, setListTypes] = useState([]);
 
     const captureTypes = () => {
         const allTypes = dataId.types;
         const arrayTypes = allTypes.map((elemento) => elemento.type.name);
-        return arrayTypes;
-        // console.log(arrayTypes);
+        setListTypes(arrayTypes);
     };
 
     useEffect(() => {
@@ -48,7 +48,6 @@ const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
         if (dataLoaded) {
             idCorrected();
             captureTypes();
-            console.log(captureTypes());
         }
     }, [dataLoaded]);
 
@@ -65,14 +64,12 @@ const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
                     idCorrigido = `#0${idAjustado}`;
                     break;
                 default:
-                    idCorrigido = idAjustado;
+                    idCorrigido = `#${idAjustado}`;
                     break;
             }
             setIdPokemon(idCorrigido);
         }
     };
-
-    // console.log(listTypes);
 
     return (
         <ContainerPokemonCard>
@@ -84,6 +81,18 @@ const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
                 <>
                     <ParagraphPokemonId>{idPokemon}</ParagraphPokemonId>
                     <NamePokemon>{name}</NamePokemon>
+                    <ContainerTypes>
+                        {listTypes.map((type) => {
+                            console.log(type);
+                            return (
+                                <ImgType
+                                    key={type}
+                                    src={getTypes(type)}
+                                    alt="img"
+                                ></ImgType>
+                            );
+                        })}
+                    </ContainerTypes>
                     <ImgPokemons src={imageUrl} alt={`Imagem do ${name}`} />
                     <ContainerButtonPokemonCard>
                         <ButtonDetailPokemonCard
