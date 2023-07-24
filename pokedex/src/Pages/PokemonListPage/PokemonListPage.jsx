@@ -9,13 +9,16 @@ import PokemonCard from '../../Components/PokemonCard/PokemonCard';
 import Header from '../../Components/Header/Header';
 import useRequestData from '../../hooks/useRequestData';
 import Error from '../../Components/Error/Error';
-import Loading from '../../Components/Error/Error';
+import Loading from '../../Components/Loading/Loading';
 
 const PokemonListPage = () => {
     const [data, isLoading, isError] = useRequestData('pokemon/');
+    // const [useRequestId] = useRequestId('pokemon/');
     const [listNamesPokemons, setListNamesPokemons] = useState([]);
     const [listUrlsPokemons, setUrlsPokemons] = useState([]);
     const [listPokemonsPokedex, setPokemonsPokedex] = useState([]);
+    // const [dataId] = useRequestData('pokemon/');
+    // const [listIds, setListIds] = useState([]);
 
     useEffect(() => {
         const urls = data.map((item) => item.url);
@@ -37,8 +40,9 @@ const PokemonListPage = () => {
         );
     };
 
-    console.log(listPokemonsPokedex);
-    console.log(listNamesPokemons);
+    // console.log(data);
+    // console.log(listPokemonsPokedex);
+    // console.log(listNamesPokemons);
 
     return (
         <>
@@ -54,7 +58,10 @@ const PokemonListPage = () => {
                     ) : (
                         listNamesPokemons.map((pokemonName, index) => (
                             <PokemonCard
+                                // id={CaptureId(index)}
+                                // id={listIds[index]}
                                 key={index}
+                                id={index}
                                 name={pokemonName}
                                 url={listUrlsPokemons[index]}
                                 listNamesPokemons={listNamesPokemons}

@@ -3,22 +3,22 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { BASE_URL } from '../constants/constants';
 
-const useRequestData = (path) => {
-    const [data, setData] = useState([]);
+const useRequestId = (path) => {
+    const [dataId, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`${BASE_URL}${path}`);
+                const response = await axios.get(`${BASE_URL}/pokemon/${path}`);
                 response.data.results
                     ? setData(response.data.results)
                     : setData(response.data);
                 // console.log(response.data);
                 setIsLoading(false);
             } catch (error) {
-                console.log(error);
+                // console.log(error);
                 setIsLoading(false);
                 setIsError(true);
             }
@@ -27,7 +27,7 @@ const useRequestData = (path) => {
         fetchData();
     }, [path]);
 
-    return [data, isLoading, isError];
+    return [dataId, isLoading, isError];
 };
 
-export default useRequestData;
+export default useRequestId;
