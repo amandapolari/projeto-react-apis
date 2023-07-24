@@ -11,6 +11,8 @@ import {
 import { goToDetails } from '../../routes/coordinator';
 import { useNavigate } from 'react-router-dom';
 import useRequestData from '../../hooks/useRequestData';
+import Loading from '../Loading/Loading';
+import Error from '../Error/Error';
 
 const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
     const navegate = useNavigate();
@@ -63,25 +65,33 @@ const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
 
     return (
         <ContainerPokemonCard>
-            <ParagraphPokemonId>{idPokemon}</ParagraphPokemonId>
-            <NamePokemon>{name}</NamePokemon>
-            <ImgPokemons src={imageUrl} alt={`Imagem do ${name}`} />
-            <ContainerButtonPokemonCard>
-                <ButtonDetailPokemonCard
-                    onClick={() => {
-                        goToDetails(navegate);
-                    }}
-                >
-                    Detalhes
-                </ButtonDetailPokemonCard>
-                <ButtonAddPokemonCard
-                    onClick={() => {
-                        addToPokedex(name);
-                    }}
-                >
-                    Adicionar
-                </ButtonAddPokemonCard>
-            </ContainerButtonPokemonCard>
+            {isLoading ? (
+                <Loading />
+            ) : isError ? (
+                <Error />
+            ) : (
+                <>
+                    <ParagraphPokemonId>{idPokemon}</ParagraphPokemonId>
+                    <NamePokemon>{name}</NamePokemon>
+                    <ImgPokemons src={imageUrl} alt={`Imagem do ${name}`} />
+                    <ContainerButtonPokemonCard>
+                        <ButtonDetailPokemonCard
+                            onClick={() => {
+                                goToDetails(navegate);
+                            }}
+                        >
+                            Detalhes
+                        </ButtonDetailPokemonCard>
+                        <ButtonAddPokemonCard
+                            onClick={() => {
+                                addToPokedex(name);
+                            }}
+                        >
+                            Adicionar
+                        </ButtonAddPokemonCard>
+                    </ContainerButtonPokemonCard>
+                </>
+            )}
         </ContainerPokemonCard>
     );
 };
