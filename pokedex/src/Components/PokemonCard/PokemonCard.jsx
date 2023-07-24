@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import {
     ButtonAddPokemonCard,
@@ -21,19 +22,17 @@ const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
         ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`
         : '';
 
-    // const [listIds, setListIds] = useState([]);
-    // console.log('o que vem em pokemonId:', pokemonId);
-
     const [dataId, isLoading, isError] = useRequestData(`pokemon/${pokemonId}`);
     const [idPokemon, setIdPokemon] = useState('');
     const [dataLoaded, setDataLoaded] = useState(false);
+    const listIds = dataId.id;
 
     useEffect(() => {
-        if (dataId.id) {
-            setIdPokemon(dataId.id);
+        if (listIds) {
+            setIdPokemon(listIds);
             setDataLoaded(true);
         }
-    }, [dataId.id]);
+    }, [listIds]);
 
     useEffect(() => {
         if (dataLoaded) {
@@ -60,8 +59,6 @@ const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
             setIdPokemon(idCorrigido);
         }
     };
-
-    console.log(idPokemon);
 
     return (
         <ContainerPokemonCard>
