@@ -19,7 +19,7 @@ export const getColors = (type) => {
         case 'ghost':
             return '#9B9FB9';
         case 'grass':
-            return '#B0CABF';
+            return '#8FC5BB';
         case 'ground':
             return '#E1A48A';
         case 'ice':
@@ -35,7 +35,7 @@ export const getColors = (type) => {
         case 'steel':
             return '#C8C8C8';
         case 'water':
-            return '#AED7FF';
+            return '#A7C8D9';
         default:
             return '#BF9762';
     }
