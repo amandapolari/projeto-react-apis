@@ -14,21 +14,10 @@ export const ContainerPokemonCard = styled.div`
 export const ParagraphPokemonId = styled.p`
     grid-row: 1 / 2;
     grid-column: 1 / 3;
-    /* border: solid 2px black; */
     margin: 0;
 `;
 
-// export const NamePokemonCard = styled.p`
-//     display: grid;
-//     grid-column: 1 / 3;
-//     grid-row: 2 / 3;
-//     height: 100%;
-//     justify-content: center;
-//     align-items: center;
-// `;
-
 export const NamePokemon = styled.p`
-    /* border: solid 2px black; */
     margin: 0;
     display: grid;
     grid-row: 2 / 3;
@@ -58,5 +47,3 @@ export const ButtonDetailPokemonCard = styled.button`
 export const ButtonAddPokemonCard = styled.button`
     grid-column: 2 / 3;
 `;
-
-

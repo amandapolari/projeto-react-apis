@@ -58,8 +58,6 @@ const PokemonListPage = () => {
                     ) : (
                         listNamesPokemons.map((pokemonName, index) => (
                             <PokemonCard
-                                // id={CaptureId(index)}
-                                // id={listIds[index]}
                                 key={index}
                                 id={index}
                                 name={pokemonName}
