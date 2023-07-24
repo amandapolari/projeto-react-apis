@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
+    ContainerBtns,
     ContainerListCardPokemon,
     ContainerPokemonListPage,
     NamePageHome,
@@ -12,13 +13,38 @@ import Error from '../../Components/Error/Error';
 import Loading from '../../Components/Loading/Loading';
 
 const PokemonListPage = () => {
-    const [data, isLoading, isError] = useRequestData('pokemon/');
-    // const [useRequestId] = useRequestId('pokemon/');
+    // Capturando dados SEM PAGINAÇÃO:
+    // const [data, isLoading, isError] = useRequestData(
+    //     'pokemon?limit=100&offset=0'
+    // );
     const [listNamesPokemons, setListNamesPokemons] = useState([]);
     const [listUrlsPokemons, setUrlsPokemons] = useState([]);
     const [listPokemonsPokedex, setPokemonsPokedex] = useState([]);
-    // const [dataId] = useRequestData('pokemon/');
-    // const [listIds, setListIds] = useState([]);
+
+    // [início] ----- Configs PAGINAÇÃO:
+    const [offset, setOffset] = useState(0);
+    const limitPerPage = 18; // Quantidade de pokémons por página!
+
+    // Função para carregar a próxima página de pokémons
+    const loadNextPage = () => {
+        setOffset((prevOffset) => prevOffset + limitPerPage);
+    };
+
+    // Função para carregar a página anterior de pokémons
+    const loadPreviousPage = () => {
+        if (offset > 0) {
+            setOffset((prevOffset) => prevOffset - limitPerPage);
+        }
+    };
+
+    const url = `pokemon?limit=${limitPerPage}&offset=${offset}`;
+    const [data, isLoading, isError] = useRequestData(url);
+
+    useEffect(() => {
+        setListNamesPokemons([]);
+        setUrlsPokemons([]);
+    }, [offset]);
+    // [fim] ------- Configs PAGINAÇÃO:
 
     useEffect(() => {
         const urls = data.map((item) => item.url);
@@ -71,6 +97,13 @@ const PokemonListPage = () => {
                         ))
                     )}
                 </ContainerListCardPokemon>
+
+                <ContainerBtns>
+                    <button onClick={loadPreviousPage} disabled={offset === 0}>
+                        Página Anterior
+                    </button>
+                    <button onClick={loadNextPage}>Próxima Página</button>
+                </ContainerBtns>
             </ContainerPokemonListPage>
         </>
     );

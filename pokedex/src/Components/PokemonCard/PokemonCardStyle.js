@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const ContainerPokemonCard = styled.div`
     display: grid;
     grid-template: 1fr 1fr 1fr 1fr 1fr / 1fr 1fr;
-    height: 30vh;
+    height: 26vh;
     width: 20vh;
     border: 1px solid lightslategray;
     background-color: ${({ color }) => color};
