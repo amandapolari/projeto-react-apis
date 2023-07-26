@@ -7,11 +7,11 @@ export const goToPokedex = (navegate) => {
 };
 
 // COM path
-// export const goToDetails = (navegate, id) => {
-//     navegate(`/details/${id}`);
-// };
+export const goToDetails = (navegate, id) => {
+    navegate(`/details/${id}`);
+};
 
 // SEM path
-export const goToDetails = (navegate) => {
-    navegate(`/details`);
-};
+// export const goToDetails = (navegate) => {
+//     navegate(`/details`);
+// };

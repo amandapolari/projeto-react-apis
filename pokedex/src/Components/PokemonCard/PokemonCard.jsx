@@ -100,7 +100,7 @@ const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
                     <ContainerButtonPokemonCard>
                         <ButtonDetailPokemonCard
                             onClick={() => {
-                                goToDetails(navegate);
+                                goToDetails(navegate,pokemonId);
                             }}
                         >
                             Detalhes
