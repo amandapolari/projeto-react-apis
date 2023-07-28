@@ -19,6 +19,7 @@ const PokemonListPage = () => {
     // );
     const [listNamesPokemons, setListNamesPokemons] = useState([]);
     const [listUrlsPokemons, setUrlsPokemons] = useState([]);
+    const [listIdsPokemons, setListIdsPokemons] = useState([]);
     const [listPokemonsPokedex, setPokemonsPokedex] = useState([]);
 
     // [início] ----- Configs PAGINAÇÃO:
@@ -48,6 +49,10 @@ const PokemonListPage = () => {
 
     useEffect(() => {
         const urls = data.map((item) => item.url);
+        urls.map((id) => {
+            const number = id.split('/').slice(-2, -1)[0];
+            setListIdsPokemons((prevList) => [...prevList, number]);
+        });
         const names = data.map(
             (item) => item.name.charAt(0).toUpperCase() + item.name.slice(1)
         );
@@ -66,10 +71,6 @@ const PokemonListPage = () => {
         );
     };
 
-    // console.log(data);
-    // console.log(listPokemonsPokedex);
-    // console.log(listNamesPokemons);
-
     return (
         <>
             <Header />
@@ -85,14 +86,14 @@ const PokemonListPage = () => {
                         listNamesPokemons.map((pokemonName, index) => (
                             <PokemonCard
                                 key={index}
-                                id={index}
+                                id={listIdsPokemons[index]}
                                 name={pokemonName}
                                 url={listUrlsPokemons[index]}
-                                listNamesPokemons={listNamesPokemons}
-                                addToPokedex={(pokemonName) => {
-                                    addToPokedex(pokemonName);
-                                    updateListNamesPokemons(pokemonName);
-                                }}
+                                // listNamesPokemons={listNamesPokemons}
+                                // addToPokedex={(pokemonName) => {
+                                //     addToPokedex(pokemonName);
+                                //     updateListNamesPokemons(pokemonName);
+                                // }}
                             />
                         ))
                     )}

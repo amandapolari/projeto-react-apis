@@ -5,7 +5,8 @@ export const ContainerPokemonCard = styled.div`
     grid-template: 1fr 1fr 1fr 1fr 1fr / 1fr 1fr;
     height: 26vh;
     width: 20vh;
-    border: 1px solid lightslategray;
+    /* Essa borda aparece mesmo que não tenha cards, por isso foi removida */
+    /* border: 1px solid lightslategray; */
     background-color: ${({ color }) => color};
     margin-bottom: 5vh;
     justify-content: center;

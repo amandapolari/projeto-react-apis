@@ -12,24 +12,30 @@ import {
     ContainerTypes,
 } from './PokemonCardStyle';
 import { goToDetails } from '../../routes/coordinator';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useRequestData from '../../hooks/useRequestData';
 import Loading from '../Loading/Loading';
 import Error from '../Error/Error';
 import { getTypes } from '../../utils/ReturnPokemonType';
 import { getColors } from '../../utils/ReturnCardColor';
 
-const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
+const PokemonCard = ({ name, id, url }) => {
     const navegate = useNavigate();
-    const pokemonId = url && url.match(/\/(\d+)\//)[1];
-    const imageUrl = pokemonId
-        ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`
+    const location = useLocation();
+
+    if (location.pathname === '/') {
+        // console.log('estamos na HOME');
+        id = url && url.match(/\/(\d+)\//)[1];
+    } else {
+        // console.log('NÃO ESTAMOS NA HOME');
+    }
+
+    const imageUrl = id
+        ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
         : '';
 
-    const [dataId, isLoading, isError] = useRequestData(`pokemon/${pokemonId}`);
-    const [idPokemon, setIdPokemon] = useState('');
-    const [dataLoaded, setDataLoaded] = useState(false);
-    const listIds = dataId.id;
+    const [dataId, isLoading, isError] = useRequestData(`pokemon/${id}`);
+    const [idPokemon, setIdPokemon] = useState(id);
     const [listTypes, setListTypes] = useState([]);
 
     const captureTypes = () => {
@@ -37,20 +43,6 @@ const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
         const arrayTypes = allTypes.map((elemento) => elemento.type.name);
         setListTypes(arrayTypes);
     };
-
-    useEffect(() => {
-        if (listIds) {
-            setIdPokemon(listIds);
-            setDataLoaded(true);
-        }
-    }, [listIds]);
-
-    useEffect(() => {
-        if (dataLoaded) {
-            idCorrected();
-            captureTypes();
-        }
-    }, [dataLoaded]);
 
     const idCorrected = () => {
         if (idPokemon) {
@@ -74,6 +66,19 @@ const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
             setIdPokemon(idCorrigido);
         }
     };
+
+    useEffect(() => {
+        const captureDatas = async () => {
+            try {
+                if (id.length) {
+                    captureTypes();
+                    idCorrected();
+                }
+            } catch (error) {}
+        };
+
+        captureDatas();
+    }, [id, dataId]);
 
     return (
         <ContainerPokemonCard color={getColors(listTypes[0])}>
@@ -100,15 +105,15 @@ const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
                     <ContainerButtonPokemonCard>
                         <ButtonDetailPokemonCard
                             onClick={() => {
-                                goToDetails(navegate,pokemonId);
+                                goToDetails(navegate, id);
                             }}
                         >
                             Detalhes
                         </ButtonDetailPokemonCard>
                         <ButtonAddPokemonCard
-                            onClick={() => {
-                                addToPokedex(name);
-                            }}
+                        // onClick={() => {
+                        //     addToPokedex(name);
+                        // }}
                         >
                             Capturar!
                         </ButtonAddPokemonCard>
