@@ -110,7 +110,7 @@ const PokemonCard = ({ name, url, listNamesPokemons, addToPokedex }) => {
                                 addToPokedex(name);
                             }}
                         >
-                            Adicionar
+                            Capturar!
                         </ButtonAddPokemonCard>
                     </ContainerButtonPokemonCard>
                 </>
