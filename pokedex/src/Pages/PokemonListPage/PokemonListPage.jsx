@@ -13,25 +13,12 @@ import Error from '../../Components/Error/Error';
 import Loading from '../../Components/Loading/Loading';
 
 const PokemonListPage = () => {
-    // Capturando dados SEM PAGINAÇÃO:
-    // const [data, isLoading, isError] = useRequestData(
-    //     'pokemon?limit=100&offset=0'
-    // );
-    const [listNamesPokemons, setListNamesPokemons] = useState([]);
-    const [listUrlsPokemons, setUrlsPokemons] = useState([]);
-    const [listIdsPokemons, setListIdsPokemons] = useState([]);
-    const [listPokemonsPokedex, setPokemonsPokedex] = useState([]);
-
-    // [início] ----- Configs PAGINAÇÃO:
+    // => PAGINAÇÃO:
     const [offset, setOffset] = useState(0);
-    const limitPerPage = 18; // Quantidade de pokémons por página!
-
-    // Função para carregar a próxima página de pokémons
+    const limitPerPage = 18;
     const loadNextPage = () => {
         setOffset((prevOffset) => prevOffset + limitPerPage);
     };
-
-    // Função para carregar a página anterior de pokémons
     const loadPreviousPage = () => {
         if (offset > 0) {
             setOffset((prevOffset) => prevOffset - limitPerPage);
@@ -42,32 +29,44 @@ const PokemonListPage = () => {
     const [data, isLoading, isError] = useRequestData(url);
 
     useEffect(() => {
-        setListNamesPokemons([]);
-        setUrlsPokemons([]);
+        setUpdateListData([]);
     }, [offset]);
-    // [fim] ------- Configs PAGINAÇÃO:
+    // PAGINAÇÃO
+
+    // => PASSANDO _TODOS_ OS DADOS DA API PARA O UPDATELIST:
+    const [updateListData, setUpdateListData] = useState(data);
 
     useEffect(() => {
-        const urls = data.map((item) => item.url);
-        urls.map((id) => {
-            const number = id.split('/').slice(-2, -1)[0];
-            setListIdsPokemons((prevList) => [...prevList, number]);
-        });
-        const names = data.map(
-            (item) => item.name.charAt(0).toUpperCase() + item.name.slice(1)
-        );
-        setUrlsPokemons(urls);
-        setListNamesPokemons(names);
+        const captureDatas = async () => {
+            try {
+                if (data.length) {
+                    setUpdateListData(data);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        captureDatas();
     }, [data]);
+    // PASSANDO _TODOS_ OS DADOS DA API PARA O UPDATELIST
 
-    const addToPokedex = (pokemonName) => {
-        const nameAdjusted = pokemonName.toLowerCase();
-        setPokemonsPokedex((prevList) => [...prevList, nameAdjusted]);
-    };
+    // => LÓGICA DE REMOÇÃO:
+    // REMOVENDO POR NOME
+    // const updateList = (name) => {
+    //     setUpdateListData(
+    //         updateListData.filter((item) => {
+    //             // console.log('item:', item);
+    //             return item.name !== name;
+    //         })
+    //     );
+    //     // console.log('list pos mudança:', updateListData);
+    // };
 
-    const updateListNamesPokemons = (pokemonName) => {
-        setListNamesPokemons((prevList) =>
-            prevList.filter((item) => item !== pokemonName)
+    // REMOVENDO POR ID
+    const updateList = (id) => {
+        setUpdateListData((prevList) =>
+            prevList.filter((item) => item.url.match(/\/(\d+)\//)[1] !== id)
         );
     };
 
@@ -83,19 +82,32 @@ const PokemonListPage = () => {
                     ) : isError ? (
                         <Error />
                     ) : (
-                        listNamesPokemons.map((pokemonName, index) => (
-                            <PokemonCard
-                                key={index}
-                                id={listIdsPokemons[index]}
-                                name={pokemonName}
-                                url={listUrlsPokemons[index]}
-                                // listNamesPokemons={listNamesPokemons}
-                                // addToPokedex={(pokemonName) => {
-                                //     addToPokedex(pokemonName);
-                                //     updateListNamesPokemons(pokemonName);
-                                // }}
-                            />
-                        ))
+                        updateListData.map((item, index) => {
+                            // console.log('TUDO:', updateListData);
+                            // console.log('Item:', item);
+                            // console.log('Index:', index);
+
+                            // console.log(
+                            //     'Teste NAME: ',
+                            //     updateListData[index].name
+                            // );
+                            // console.log(
+                            //     'Teste URL: ',
+                            //     updateListData[index].url
+                            // );
+                            // console.log(
+                            //     'Teste ID: ',
+                            //     item.url.match(/\/(\d+)\//)[1]
+                            // );
+                            return (
+                                <PokemonCard
+                                    key={index}
+                                    id={item.url.match(/\/(\d+)\//)[1]}
+                                    name={item.name}
+                                    updateList={updateList}
+                                />
+                            );
+                        })
                     )}
                 </ContainerListCardPokemon>
 

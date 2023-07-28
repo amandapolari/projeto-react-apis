@@ -12,41 +12,45 @@ import {
     ContainerTypes,
 } from './PokemonCardStyle';
 import { goToDetails } from '../../routes/coordinator';
-import { useLocation, useNavigate } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useRequestData from '../../hooks/useRequestData';
 import Loading from '../Loading/Loading';
 import Error from '../Error/Error';
 import { getTypes } from '../../utils/ReturnPokemonType';
 import { getColors } from '../../utils/ReturnCardColor';
 
-const PokemonCard = ({ name, id, url }) => {
+const PokemonCard = ({ id, name, updateList }) => {
     const navegate = useNavigate();
-    const location = useLocation();
 
-    if (location.pathname === '/') {
-        // console.log('estamos na HOME');
-        id = url && url.match(/\/(\d+)\//)[1];
-    } else {
-        // console.log('NÃO ESTAMOS NA HOME');
-    }
+    // const location = useLocation();
+    // let id;
+    // if (location.pathname === '/') {
+    //     // console.log('estamos na HOME');
+    //     id = url && url.match(/\/(\d+)\//)[1];
+    // } else {
+    //     // console.log('NÃO ESTAMOS NA HOME');
+    // }
+
+    const adjustedName = name && name.charAt(0).toUpperCase() + name.slice(1);
 
     const imageUrl = id
         ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
         : '';
 
-    const [dataId, isLoading, isError] = useRequestData(`pokemon/${id}`);
+    const [data, isLoading, isError] = useRequestData(`pokemon/${id}`);
     const [idPokemon, setIdPokemon] = useState(id);
     const [listTypes, setListTypes] = useState([]);
 
     const captureTypes = () => {
-        const allTypes = dataId.types;
+        const allTypes = data.types;
         const arrayTypes = allTypes.map((elemento) => elemento.type.name);
         setListTypes(arrayTypes);
     };
 
     const idCorrected = () => {
-        if (idPokemon) {
-            const idAjustado = idPokemon.toString();
+        if (id) {
+            const idAjustado = id.toString();
             let idCorrigido = '';
 
             switch (idAjustado.length) {
@@ -76,9 +80,8 @@ const PokemonCard = ({ name, id, url }) => {
                 }
             } catch (error) {}
         };
-
         captureDatas();
-    }, [id, dataId]);
+    }, [id, data]);
 
     return (
         <ContainerPokemonCard color={getColors(listTypes[0])}>
@@ -89,19 +92,19 @@ const PokemonCard = ({ name, id, url }) => {
             ) : (
                 <>
                     <ParagraphPokemonId>{idPokemon}</ParagraphPokemonId>
-                    <NamePokemon>{name}</NamePokemon>
+                    <NamePokemon>{adjustedName}</NamePokemon>
                     <ContainerTypes>
-                        {listTypes.map((type) => {
+                        {listTypes.map((type, index) => {
                             return (
                                 <ImgType
-                                    key={type}
+                                    key={index}
                                     src={getTypes(type)}
                                     alt="img"
                                 ></ImgType>
                             );
                         })}
                     </ContainerTypes>
-                    <ImgPokemons src={imageUrl} alt={`Imagem do ${name}`} />
+                    <ImgPokemons src={imageUrl} alt={`Imagem do ${adjustedName}`} />
                     <ContainerButtonPokemonCard>
                         <ButtonDetailPokemonCard
                             onClick={() => {
@@ -111,9 +114,11 @@ const PokemonCard = ({ name, id, url }) => {
                             Detalhes
                         </ButtonDetailPokemonCard>
                         <ButtonAddPokemonCard
-                        // onClick={() => {
-                        //     addToPokedex(name);
-                        // }}
+                            onClick={() => {
+                                // REMOVENDO POR NOME
+                                // updateList(name);
+                                updateList(id);
+                            }}
                         >
                             Capturar!
                         </ButtonAddPokemonCard>
