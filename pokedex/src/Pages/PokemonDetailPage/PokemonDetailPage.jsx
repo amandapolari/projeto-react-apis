@@ -117,8 +117,16 @@ const PokemonDetailPage = () => {
             try {
                 if (pokemonData.sprites) {
                     setValues({
-                        urlImgFront: pokemonData.sprites.front_default,
-                        urlImgBack: pokemonData.sprites.back_default,
+                        // urlImgFront: pokemonData.sprites.front_default,
+                        // urlImgBack: pokemonData.sprites.back_default,
+                        urlImgFront:
+                            pokemonData.sprites.versions['generation-v'][
+                                'black-white'
+                            ].animated.front_default,
+                        urlImgBack:
+                            pokemonData.sprites.versions['generation-v'][
+                                'black-white'
+                            ].animated.back_default,
                     });
                     captureTypes();
                     idCorrected();
@@ -180,7 +188,10 @@ const PokemonDetailPage = () => {
                             </ContainerValueStat>
                         </ContainerStats>
                         <ContainerImgMain>
-                            <ImgMain src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`} alt="" />
+                            <ImgMain
+                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`}
+                                alt=""
+                            />
                         </ContainerImgMain>
                         <ContainerTypes>
                             <p>{lisIdPokemon}</p>

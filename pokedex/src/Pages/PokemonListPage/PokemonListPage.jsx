@@ -63,12 +63,37 @@ const PokemonListPage = () => {
     //     // console.log('list pos mudança:', updateListData);
     // };
 
+    const [idPokemonsRemoveds, setIdPokemonsRemoveds] = useState([]);
+
+    // Carrega os dados do local storage no estado quando o componente for montado
+    useEffect(() => {
+        // setUpdateListData(data);
+        setIdPokemonsRemoveds(JSON.parse(localStorage.getItem('idPokemonsRemoveds')) || []);
+      }, [data, offset]);
+
+    useEffect(() => {
+        console.log(idPokemonsRemoveds);
+    }, [idPokemonsRemoveds]);
+
     // REMOVENDO POR ID
     const updateList = (id) => {
         setUpdateListData((prevList) =>
             prevList.filter((item) => item.url.match(/\/(\d+)\//)[1] !== id)
         );
+        setIdPokemonsRemoveds((prevIds) => [...prevIds, id]);
     };
+
+    // Salva os dados no local storage sempre que o array idPokemonsRemoveds é atualizado
+    useEffect(() => {
+        localStorage.setItem(
+            'idPokemonsRemoveds',
+            JSON.stringify(idPokemonsRemoveds)
+        );
+    }, [idPokemonsRemoveds]);
+
+    // useEffect(() => {
+    //     console.log('Valor atualizado de idPokemonsRemoveds:', idPokemonsRemoveds);
+    //   }, [idPokemonsRemoveds]);
 
     return (
         <>
