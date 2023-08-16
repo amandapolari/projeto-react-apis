@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import GlobalContext from '../../contexts/GlobalContext';
 import {
     ContainerBtns,
     ContainerListCardPokemon,
@@ -13,6 +14,10 @@ import Error from '../../Components/Error/Error';
 import Loading from '../../Components/Loading/Loading';
 
 const PokemonListPage = () => {
+    const context = useContext(GlobalContext);
+    const { listTest } = context;
+    // console.log(listTest);
+
     // => PAGINAÇÃO:
     const [offset, setOffset] = useState(0);
     const limitPerPage = 18;

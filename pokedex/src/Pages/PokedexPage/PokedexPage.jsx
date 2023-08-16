@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import GlobalContext from '../../contexts/GlobalContext';
 import {
     ContainerListCardPokedex,
     ContainerPokedexPage,
@@ -9,6 +10,9 @@ import PokemonCard from '../../Components/PokemonCard/PokemonCard';
 import Header from '../../Components/Header/Header';
 
 const PokedexPage = () => {
+    const context = useContext(GlobalContext);
+    const { listTest } = context;
+    // console.log(listTest);
     return (
         <>
             <Header />

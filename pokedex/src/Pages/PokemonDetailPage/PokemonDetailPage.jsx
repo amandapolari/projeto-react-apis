@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import GlobalContext from '../../contexts/GlobalContext';
 import {
     ContainerImgBack,
     ContainerImgFront,
@@ -28,6 +29,9 @@ import Error from '../../Components/Error/Error';
 import { getTypes } from '../../utils/ReturnPokemonType';
 
 const PokemonDetailPage = () => {
+    const context = useContext(GlobalContext);
+    const { listTest } = context;
+    // console.log(listTest);
     const params = useParams();
     // todo objeto:
     // console.log(params);
