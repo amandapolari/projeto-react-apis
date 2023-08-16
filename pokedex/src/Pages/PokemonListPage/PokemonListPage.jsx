@@ -16,22 +16,18 @@ const PokemonListPage = () => {
     // => PAGINAÇÃO:
     const [offset, setOffset] = useState(0);
     const limitPerPage = 18;
+    const url = `pokemon?limit=${limitPerPage}&offset=${offset}`;
+    const [data, isLoading, isError] = useRequestData(url);
+
     const loadNextPage = () => {
         setOffset((prevOffset) => prevOffset + limitPerPage);
     };
+
     const loadPreviousPage = () => {
         if (offset > 0) {
             setOffset((prevOffset) => prevOffset - limitPerPage);
         }
     };
-
-    const url = `pokemon?limit=${limitPerPage}&offset=${offset}`;
-    const [data, isLoading, isError] = useRequestData(url);
-
-    useEffect(() => {
-        setUpdateListData([]);
-    }, [offset]);
-    // PAGINAÇÃO
 
     // => PASSANDO _TODOS_ OS DADOS DA API PARA O UPDATELIST:
     const [updateListData, setUpdateListData] = useState(data);
@@ -49,31 +45,15 @@ const PokemonListPage = () => {
 
         captureDatas();
     }, [data]);
-    // PASSANDO _TODOS_ OS DADOS DA API PARA O UPDATELIST
 
-    // => LÓGICA DE REMOÇÃO:
-    // REMOVENDO POR NOME
-    // const updateList = (name) => {
-    //     setUpdateListData(
-    //         updateListData.filter((item) => {
-    //             // console.log('item:', item);
-    //             return item.name !== name;
-    //         })
-    //     );
-    //     // console.log('list pos mudança:', updateListData);
-    // };
-
+    // => LÓGICA DE REMOÇÃO DE POKEMONS
     const [idPokemonsRemoveds, setIdPokemonsRemoveds] = useState([]);
 
-    // Carrega os dados do local storage no estado quando o componente for montado
     useEffect(() => {
-        // setUpdateListData(data);
-        setIdPokemonsRemoveds(JSON.parse(localStorage.getItem('idPokemonsRemoveds')) || []);
-      }, [data, offset]);
-
-    useEffect(() => {
-        console.log(idPokemonsRemoveds);
-    }, [idPokemonsRemoveds]);
+        setIdPokemonsRemoveds(
+            JSON.parse(localStorage.getItem('idPokemonsRemoveds')) || []
+        );
+    }, [data, offset]);
 
     // REMOVENDO POR ID
     const updateList = (id) => {
@@ -83,17 +63,12 @@ const PokemonListPage = () => {
         setIdPokemonsRemoveds((prevIds) => [...prevIds, id]);
     };
 
-    // Salva os dados no local storage sempre que o array idPokemonsRemoveds é atualizado
     useEffect(() => {
         localStorage.setItem(
             'idPokemonsRemoveds',
             JSON.stringify(idPokemonsRemoveds)
         );
     }, [idPokemonsRemoveds]);
-
-    // useEffect(() => {
-    //     console.log('Valor atualizado de idPokemonsRemoveds:', idPokemonsRemoveds);
-    //   }, [idPokemonsRemoveds]);
 
     return (
         <>

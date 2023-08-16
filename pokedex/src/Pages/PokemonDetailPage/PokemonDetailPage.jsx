@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import {
     ContainerImgBack,
@@ -36,8 +37,9 @@ const PokemonDetailPage = () => {
     const id = params.id;
 
     const [pokemonData, isLoading, isError] = useRequestData(`pokemon/${id}`);
+    // console.log('DETALHES', pokemonData);
 
-    console.log(pokemonData);
+    // console.log(pokemonData);
 
     const [values, setValues] = useState({
         urlImgFront: '',
