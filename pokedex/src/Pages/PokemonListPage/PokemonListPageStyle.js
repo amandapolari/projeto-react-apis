@@ -7,7 +7,8 @@ export const ContainerPokemonListPage = styled.div`
 
 export const ContainerListCardPokemon = styled.div`
     display: flex;
-    justify-content: space-evenly;
+    flex-wrap: wrap;
+    justify-content: space-around;
 `;
 
 export const NamePageHome = styled.p`
@@ -16,4 +17,9 @@ export const NamePageHome = styled.p`
 `;
 export const TitlePageHome = styled.h1`
     padding: 1vh;
+`;
+
+export const ContainerBtns = styled.div`
+    display: flex;
+    justify-content: center;
 `;

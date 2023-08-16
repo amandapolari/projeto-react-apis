@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const ContainerErrorPage = styled.div`
     display: grid;
-    background-color: lightslategray;
+    /* background-color: lightslategray; */
     justify-content: center;
     height: 86vh;
 `;

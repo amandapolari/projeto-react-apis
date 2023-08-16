@@ -17,11 +17,6 @@ const PokedexPage = () => {
                 <TitlePagePokedex>Meus Pokémons</TitlePagePokedex>
                 <ContainerListCardPokedex>
                     <PokemonCard />
-                    <PokemonCard />
-                    <PokemonCard />
-                    <PokemonCard />
-                    <PokemonCard />
-                    <PokemonCard />
                 </ContainerListCardPokedex>
             </ContainerPokedexPage>
         </>
