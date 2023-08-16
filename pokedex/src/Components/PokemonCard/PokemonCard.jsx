@@ -16,7 +16,7 @@ import { goToDetails } from '../../routes/coordinator';
 import { useNavigate } from 'react-router-dom';
 import useRequestData from '../../hooks/useRequestData';
 import Loading from '../Loading/Loading';
-import Error from '../Error/Error';
+// import Error from '../Error/Error';
 import { getTypes } from '../../utils/ReturnPokemonType';
 import { getColors } from '../../utils/ReturnCardColor';
 
@@ -88,7 +88,8 @@ const PokemonCard = ({ id, name, updateList }) => {
             {isLoading ? (
                 <Loading />
             ) : isError ? (
-                <Error />
+                // <Error />
+                'Erro na requisição'
             ) : (
                 <>
                     <ParagraphPokemonId>{idPokemon}</ParagraphPokemonId>
@@ -104,7 +105,10 @@ const PokemonCard = ({ id, name, updateList }) => {
                             );
                         })}
                     </ContainerTypes>
-                    <ImgPokemons src={imageUrl} alt={`Imagem do ${adjustedName}`} />
+                    <ImgPokemons
+                        src={imageUrl}
+                        alt={`Imagem do ${adjustedName}`}
+                    />
                     <ContainerButtonPokemonCard>
                         <ButtonDetailPokemonCard
                             onClick={() => {
@@ -116,8 +120,8 @@ const PokemonCard = ({ id, name, updateList }) => {
                         <ButtonAddPokemonCard
                             onClick={() => {
                                 // REMOVENDO POR NOME
-                                // updateList(name);
-                                updateList(id);
+                                updateList(name);
+                                // updateList(id);
                             }}
                         >
                             Capturar!

@@ -42,17 +42,10 @@ const PokemonListPage = () => {
     );
 
     useEffect(() => {
-        const captureDatas = async () => {
-            try {
-                if (data) {
-                    setListPokemonsHome(data);
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        captureDatas();
-    }, [data]);
+        if (listPokemonsHome.length === 0 && data) {
+            setListPokemonsHome(data);
+        }
+    }, [data, listPokemonsHome, setListPokemonsHome]);
 
     return (
         <>

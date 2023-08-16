@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import React, { useContext } from 'react';
 import GlobalContext from '../../contexts/GlobalContext';
 import {
@@ -11,7 +12,7 @@ import Header from '../../Components/Header/Header';
 
 const PokedexPage = () => {
     const context = useContext(GlobalContext);
-    const { listPokemonsHome, updateList } = context;
+    const { listPokemonsPokedex, updateList } = context;
 
     return (
         <>
@@ -20,16 +21,20 @@ const PokedexPage = () => {
                 <NamePagePokedex>[POKEDEX] POKEDEX PAGE</NamePagePokedex>
                 <TitlePagePokedex>Meus Pokémons</TitlePagePokedex>
                 <ContainerListCardPokedex>
-                    {listPokemonsHome.map((item, index) => {
-                        return (
-                            <PokemonCard
-                                key={index}
-                                id={item.url.match(/\/(\d+)\//)[1]}
-                                name={item.name}
-                                updateList={updateList}
-                            />
-                        );
-                    })}
+                    {listPokemonsPokedex.flatMap((innerArray, index) =>
+                        innerArray.map((item, innerIndex) => (
+                            <div key={`${index}-${innerIndex}`}>
+                                <PokemonCard
+                                    id={
+                                        item.url &&
+                                        item.url.match(/\/(\d+)\//)[1]
+                                    }
+                                    name={item.name}
+                                    updateList={updateList}
+                                />
+                            </div>
+                        ))
+                    )}
                 </ContainerListCardPokedex>
             </ContainerPokedexPage>
         </>
