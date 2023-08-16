@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const ContainerListCardPokedex = styled.div`
     display: flex;
-    justify-content: space-evenly;
+    flex-wrap: wrap;
+    justify-content: space-around;
 `;
 
 export const ContainerPokedexPage = styled.div`

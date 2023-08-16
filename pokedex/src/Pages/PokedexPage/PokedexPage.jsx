@@ -11,8 +11,7 @@ import Header from '../../Components/Header/Header';
 
 const PokedexPage = () => {
     const context = useContext(GlobalContext);
-    const { listPokemonsHome } = context;
-    // console.log('POKEDEX:', listPokemonsHome);
+    const { listPokemonsHome, updateList } = context;
 
     return (
         <>
@@ -27,7 +26,7 @@ const PokedexPage = () => {
                                 key={index}
                                 id={item.url.match(/\/(\d+)\//)[1]}
                                 name={item.name}
-                                // updateList={updateList}
+                                updateList={updateList}
                             />
                         );
                     })}

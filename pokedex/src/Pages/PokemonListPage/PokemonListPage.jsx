@@ -1,6 +1,7 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState, useContext } from 'react';
+// import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import GlobalContext from '../../contexts/GlobalContext';
 import {
     // ContainerBtns,
@@ -17,10 +18,10 @@ import Loading from '../../Components/Loading/Loading';
 
 const PokemonListPage = () => {
     const context = useContext(GlobalContext);
-    const { listPokemonsHome, setListPokemonsHome } = context;
-    // console.log(listPokemonsHome);
+    const { listPokemonsHome, setListPokemonsHome, updateList } = context;
 
-    // console.log('INICIO');
+    // PAGINAÇÃO - LÓGICA:
+    //
     // => PAGINAÇÃO:
     // const [offset, setOffset] = useState(0);
     // const limitPerPage = 18;
@@ -40,58 +41,18 @@ const PokemonListPage = () => {
         'pokemon?limit=8&offset=0'
     );
 
-    // => PASSANDO _TODOS_ OS DADOS DA API PARA O UPDATELIST:
-    // const [updateListData, setUpdateListData] = useState(data);
-
     useEffect(() => {
         const captureDatas = async () => {
             try {
-                if (data.length) {
+                if (data) {
                     setListPokemonsHome(data);
                 }
             } catch (error) {
                 console.log(error);
             }
         };
-
         captureDatas();
     }, [data]);
-
-    // => LÓGICA DE REMOÇÃO DE POKEMONS
-    const [idPokemonsRemoveds, setIdPokemonsRemoveds] = useState([]);
-    // console.log(idPokemonsRemoveds);
-
-    // useEffect(() => {
-    //     setIdPokemonsRemoveds(
-    //         JSON.parse(localStorage.getItem('idPokemonsRemoveds')) || []
-    //     );
-    // }, [data, offset]);
-
-    // REMOVENDO POR ID
-    const updateList = (id) => {
-        setListPokemonsHome((prevList) =>
-            prevList.filter((item) => item.url.match(/\/(\d+)\//)[1] !== id)
-        );
-        setIdPokemonsRemoveds((prevIds) => [...prevIds, id]);
-    };
-
-    // useEffect(() => {
-    //     localStorage.setItem(
-    //         'idPokemonsRemoveds',
-    //         JSON.stringify(idPokemonsRemoveds)
-    //     );
-    // }, [idPokemonsRemoveds]);
-
-    // useEffect(() => {
-    //     if (updateListData) {
-    //         // setListPokemonsHome(updateListData);
-    //         console.log(listPokemonsHome);
-    //     }
-    // }, [idPokemonsRemoveds]);
-
-    useEffect(() => {
-        console.log('listPokemonsHome:', listPokemonsHome);
-    }, [listPokemonsHome]);
 
     return (
         <>
@@ -106,17 +67,16 @@ const PokemonListPage = () => {
                         <Error />
                     ) : (
                         listPokemonsHome.map((item, index) => {
-                            // console.log('TUDO:', updateListData);
-                            // console.log('Item:', item);
-                            // console.log('Index:', index);
-
+                            // console.log('TUDO:', listPokemonsHome);
+                            // console.log('ITEM:', item);
+                            // console.log('INDEX:', index);
                             // console.log(
                             //     'Teste NAME: ',
-                            //     updateListData[index].name
+                            //     listPokemonsHome[index].name
                             // );
                             // console.log(
                             //     'Teste URL: ',
-                            //     updateListData[index].url
+                            //     listPokemonsHome[index].url
                             // );
                             // console.log(
                             //     'Teste ID: ',
@@ -133,8 +93,8 @@ const PokemonListPage = () => {
                         })
                     )}
                 </ContainerListCardPokemon>
-
-                {/* <ContainerBtns>
+                {/* PAGINAÇÃO - BTNS:
+                <ContainerBtns>
                     <button onClick={loadPreviousPage} disabled={offset === 0}>
                         Página Anterior
                     </button>
