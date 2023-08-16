@@ -1,7 +1,9 @@
+/* eslint-disable no-use-before-define */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useContext } from 'react';
 import GlobalContext from '../../contexts/GlobalContext';
 import {
-    ContainerBtns,
+    // ContainerBtns,
     ContainerListCardPokemon,
     ContainerPokemonListPage,
     NamePageHome,
@@ -15,33 +17,37 @@ import Loading from '../../Components/Loading/Loading';
 
 const PokemonListPage = () => {
     const context = useContext(GlobalContext);
-    const { listTest } = context;
-    // console.log(listTest);
+    const { listPokemonsHome, setListPokemonsHome } = context;
+    // console.log(listPokemonsHome);
 
+    // console.log('INICIO');
     // => PAGINAÇÃO:
-    const [offset, setOffset] = useState(0);
-    const limitPerPage = 18;
-    const url = `pokemon?limit=${limitPerPage}&offset=${offset}`;
-    const [data, isLoading, isError] = useRequestData(url);
-
-    const loadNextPage = () => {
-        setOffset((prevOffset) => prevOffset + limitPerPage);
-    };
-
-    const loadPreviousPage = () => {
-        if (offset > 0) {
-            setOffset((prevOffset) => prevOffset - limitPerPage);
-        }
-    };
+    // const [offset, setOffset] = useState(0);
+    // const limitPerPage = 18;
+    // const url = `pokemon?limit=${limitPerPage}&offset=${offset}`;
+    // const [data, isLoading, isError] = useRequestData(url);
+    // const loadNextPage = () => {
+    //     setOffset((prevOffset) => prevOffset + limitPerPage);
+    // };
+    // const loadPreviousPage = () => {
+    //     if (offset > 0) {
+    //         setOffset((prevOffset) => prevOffset - limitPerPage);
+    //     }
+    // };
+    // => SEM PAGINAÇÃO:
+    // const url = `pokemon?limit=${limitPerPage}&offset=${offset}`;
+    const [data, isLoading, isError] = useRequestData(
+        'pokemon?limit=8&offset=0'
+    );
 
     // => PASSANDO _TODOS_ OS DADOS DA API PARA O UPDATELIST:
-    const [updateListData, setUpdateListData] = useState(data);
+    // const [updateListData, setUpdateListData] = useState(data);
 
     useEffect(() => {
         const captureDatas = async () => {
             try {
                 if (data.length) {
-                    setUpdateListData(data);
+                    setListPokemonsHome(data);
                 }
             } catch (error) {
                 console.log(error);
@@ -53,27 +59,39 @@ const PokemonListPage = () => {
 
     // => LÓGICA DE REMOÇÃO DE POKEMONS
     const [idPokemonsRemoveds, setIdPokemonsRemoveds] = useState([]);
+    // console.log(idPokemonsRemoveds);
 
-    useEffect(() => {
-        setIdPokemonsRemoveds(
-            JSON.parse(localStorage.getItem('idPokemonsRemoveds')) || []
-        );
-    }, [data, offset]);
+    // useEffect(() => {
+    //     setIdPokemonsRemoveds(
+    //         JSON.parse(localStorage.getItem('idPokemonsRemoveds')) || []
+    //     );
+    // }, [data, offset]);
 
     // REMOVENDO POR ID
     const updateList = (id) => {
-        setUpdateListData((prevList) =>
+        setListPokemonsHome((prevList) =>
             prevList.filter((item) => item.url.match(/\/(\d+)\//)[1] !== id)
         );
         setIdPokemonsRemoveds((prevIds) => [...prevIds, id]);
     };
 
+    // useEffect(() => {
+    //     localStorage.setItem(
+    //         'idPokemonsRemoveds',
+    //         JSON.stringify(idPokemonsRemoveds)
+    //     );
+    // }, [idPokemonsRemoveds]);
+
+    // useEffect(() => {
+    //     if (updateListData) {
+    //         // setListPokemonsHome(updateListData);
+    //         console.log(listPokemonsHome);
+    //     }
+    // }, [idPokemonsRemoveds]);
+
     useEffect(() => {
-        localStorage.setItem(
-            'idPokemonsRemoveds',
-            JSON.stringify(idPokemonsRemoveds)
-        );
-    }, [idPokemonsRemoveds]);
+        console.log('listPokemonsHome:', listPokemonsHome);
+    }, [listPokemonsHome]);
 
     return (
         <>
@@ -87,7 +105,7 @@ const PokemonListPage = () => {
                     ) : isError ? (
                         <Error />
                     ) : (
-                        updateListData.map((item, index) => {
+                        listPokemonsHome.map((item, index) => {
                             // console.log('TUDO:', updateListData);
                             // console.log('Item:', item);
                             // console.log('Index:', index);
@@ -116,12 +134,12 @@ const PokemonListPage = () => {
                     )}
                 </ContainerListCardPokemon>
 
-                <ContainerBtns>
+                {/* <ContainerBtns>
                     <button onClick={loadPreviousPage} disabled={offset === 0}>
                         Página Anterior
                     </button>
                     <button onClick={loadNextPage}>Próxima Página</button>
-                </ContainerBtns>
+                </ContainerBtns> */}
             </ContainerPokemonListPage>
         </>
     );

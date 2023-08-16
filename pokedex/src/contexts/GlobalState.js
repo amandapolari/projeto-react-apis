@@ -2,10 +2,11 @@ import GlobalContext from './GlobalContext';
 import { useState } from 'react';
 
 const GlobalState = ({ children }) => {
-    const [listTest, setListTest] = useState(['Aquiii']);
+    const [listPokemonsHome, setListPokemonsHome] = useState([]);
 
     const datas = {
-        listTest,
+        listPokemonsHome,
+        setListPokemonsHome,
     };
 
     return (
