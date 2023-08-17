@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable react-hooks/exhaustive-deps */
 // import React, { useEffect, useState, useContext } from 'react';
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import GlobalContext from '../../contexts/GlobalContext';
 import {
     // ContainerBtns,
@@ -18,7 +18,12 @@ import Loading from '../../Components/Loading/Loading';
 
 const PokemonListPage = () => {
     const context = useContext(GlobalContext);
-    const { listPokemonsHome, setListPokemonsHome, updateList } = context;
+    const {
+        listPokemonsHome,
+        setListPokemonsHome,
+        listPokemonsPokedex,
+        updateList,
+    } = context;
 
     // PAGINAÇÃO - LÓGICA:
     //
@@ -37,15 +42,38 @@ const PokemonListPage = () => {
     // };
     // => SEM PAGINAÇÃO:
     // const url = `pokemon?limit=${limitPerPage}&offset=${offset}`;
+
     const [data, isLoading, isError] = useRequestData(
         'pokemon?limit=8&offset=0'
     );
+
+    const [isHomeSet, setIsHomeSet] = useState(false);
 
     useEffect(() => {
         if (listPokemonsHome.length === 0 && data) {
             setListPokemonsHome(data);
         }
-    }, [data, listPokemonsHome, setListPokemonsHome]);
+
+        const namesPokemonsPokedex = listPokemonsPokedex.flatMap((item) =>
+            item.map((i) => i.name)
+        );
+
+        const namesData = data.map((item) => item.name);
+
+        const missingNames = namesData.filter(
+            (name) => !namesPokemonsPokedex.includes(name)
+        );
+
+        if (missingNames.length > 0 && !isHomeSet) {
+            const missingPokemons = data.filter((item) =>
+                missingNames.includes(item.name)
+            );
+            setListPokemonsHome(missingPokemons);
+            setIsHomeSet(true);
+        } else {
+            // console.log('não foi');
+        }
+    }, [data, listPokemonsHome, listPokemonsPokedex, isHomeSet]);
 
     return (
         <>
@@ -78,8 +106,11 @@ const PokemonListPage = () => {
                             return (
                                 <PokemonCard
                                     key={index}
-                                    id={item.url.match(/\/(\d+)\//)[1]}
-                                    name={item.name}
+                                    id={
+                                        item.url &&
+                                        item.url.match(/\/(\d+)\//)[1]
+                                    }
+                                    name={item.name && item.name}
                                     updateList={updateList}
                                 />
                             );

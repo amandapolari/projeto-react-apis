@@ -1,21 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import GlobalContext from './GlobalContext';
 import { useState } from 'react';
-// import { useEffect, useState } from 'react';
 
 const GlobalState = ({ children }) => {
     const [listPokemonsHome, setListPokemonsHome] = useState([]);
     const [listPokemonsPokedex, setListPokemonsPokedex] = useState([]);
-    // const [idPokemonsRemoveds, setIdPokemonsRemoveds] = useState([]);
-
-    // => LÓGICA DE REMOÇÃO DE POKEMONS
-    // const updateList = (id) => {
-    //     // setListPokemonsHome((prevList) =>
-    //     //     prevList.filter((item) => item.url.match(/\/(\d+)\//)[1] !== id)
-    //     // );
-    //     // setIdPokemonsRemoveds((prevIds) => [...prevIds, id]);
-
-    // };
 
     //
     //useEffect(() => {
@@ -38,9 +27,17 @@ const GlobalState = ({ children }) => {
         setListPokemonsPokedex(newList);
     };
 
+    //
     // useEffect(() => {
     //     console.log(listPokemonsPokedex);
     // }, [listPokemonsHome]);
+
+    const removeItemPokedex = (name) => {
+        const updatedPokedex = listPokemonsPokedex.map((innerArray) =>
+            innerArray.filter((pokemon) => pokemon.name !== name)
+        );
+        setListPokemonsPokedex(updatedPokedex);
+    };
 
     const datas = {
         listPokemonsHome,
@@ -48,6 +45,7 @@ const GlobalState = ({ children }) => {
         listPokemonsPokedex,
         setListPokemonsPokedex,
         updateList,
+        removeItemPokedex,
     };
 
     return (
