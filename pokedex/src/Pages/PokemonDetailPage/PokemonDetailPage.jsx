@@ -41,10 +41,8 @@ const PokemonDetailPage = () => {
     const name = params.name;
 
     const [pokemonData, isLoading, isError] = useRequestData(`pokemon/${name}`);
-    console.log('DETALHES', pokemonData);
-    console.log('ID DO POKEMON', pokemonData.id);
-
-    // console.log(pokemonData);
+    // console.log('DETALHES', pokemonData);
+    // console.log('ID DO POKEMON', pokemonData.id);
 
     const [values, setValues] = useState({
         urlImgFront: '',
@@ -141,7 +139,6 @@ const PokemonDetailPage = () => {
                     captureMoves();
                     captureStats();
                     captureStatsValues();
-                    // console.log('Esta capturando');
                 }
             } catch (error) {
                 console.log(error);

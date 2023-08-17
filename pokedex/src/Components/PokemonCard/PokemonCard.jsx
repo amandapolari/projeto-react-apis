@@ -39,16 +39,6 @@ const PokemonCard = ({ id, name, updateList }) => {
         }
     }, []);
 
-    //
-    // const location = useLocation();
-    // let id;
-    // if (location.pathname === '/') {
-    //     // console.log('estamos na HOME');
-    //     id = url && url.match(/\/(\d+)\//)[1];
-    // } else {
-    //     // console.log('NÃO ESTAMOS NA HOME');
-    // }
-
     const adjustedName = name && name.charAt(0).toUpperCase() + name.slice(1);
 
     const imageUrl = id

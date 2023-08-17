@@ -1,18 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import GlobalContext from './GlobalContext';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const GlobalState = ({ children }) => {
     const [listPokemonsHome, setListPokemonsHome] = useState([]);
     const [listPokemonsPokedex, setListPokemonsPokedex] = useState([]);
-
-    //
-    //useEffect(() => {
-    //     localStorage.setItem(
-    //         'idPokemonsRemoveds',
-    //         JSON.stringify(idPokemonsRemoveds)
-    //     );
-    // }, [idPokemonsRemoveds]);
+    const [dataReceivedFromApi, setDataReceivedFromApi] = useState();
 
     const updateList = (name) => {
         const listFilteredForHome = listPokemonsHome.filter(
@@ -27,17 +20,26 @@ const GlobalState = ({ children }) => {
         setListPokemonsPokedex(newList);
     };
 
-    //
-    // useEffect(() => {
-    //     console.log(listPokemonsPokedex);
-    // }, [listPokemonsHome]);
-
     const removeItemPokedex = (name) => {
         const updatedPokedex = listPokemonsPokedex.map((innerArray) =>
             innerArray.filter((pokemon) => pokemon.name !== name)
         );
         setListPokemonsPokedex(updatedPokedex);
     };
+
+    useEffect(() => {
+        if (dataReceivedFromApi && listPokemonsPokedex.length > 0) {
+            const namesPokemonsPokedex = listPokemonsPokedex.flatMap((item) =>
+                item.map((i) => i.name)
+            );
+
+            const filteredData = dataReceivedFromApi.filter(
+                (item) => !namesPokemonsPokedex.includes(item.name)
+            );
+
+            setListPokemonsHome(filteredData);
+        }
+    }, [dataReceivedFromApi, listPokemonsPokedex]);
 
     const datas = {
         listPokemonsHome,
@@ -46,6 +48,8 @@ const GlobalState = ({ children }) => {
         setListPokemonsPokedex,
         updateList,
         removeItemPokedex,
+        dataReceivedFromApi,
+        setDataReceivedFromApi,
     };
 
     return (

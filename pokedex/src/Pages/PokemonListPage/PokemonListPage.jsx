@@ -23,6 +23,8 @@ const PokemonListPage = () => {
         setListPokemonsHome,
         listPokemonsPokedex,
         updateList,
+        setDataReceivedFromApi,
+        isHomeSet,
     } = context;
 
     // PAGINAÇÃO - LÓGICA:
@@ -47,31 +49,12 @@ const PokemonListPage = () => {
         'pokemon?limit=8&offset=0'
     );
 
-    const [isHomeSet, setIsHomeSet] = useState(false);
-
     useEffect(() => {
         if (listPokemonsHome.length === 0 && data) {
             setListPokemonsHome(data);
-        }
-
-        const namesPokemonsPokedex = listPokemonsPokedex.flatMap((item) =>
-            item.map((i) => i.name)
-        );
-
-        const namesData = data.map((item) => item.name);
-
-        const missingNames = namesData.filter(
-            (name) => !namesPokemonsPokedex.includes(name)
-        );
-
-        if (missingNames.length > 0 && !isHomeSet) {
-            const missingPokemons = data.filter((item) =>
-                missingNames.includes(item.name)
-            );
-            setListPokemonsHome(missingPokemons);
-            setIsHomeSet(true);
+            setDataReceivedFromApi(data);
         } else {
-            // console.log('não foi');
+            setListPokemonsHome(listPokemonsHome);
         }
     }, [data, listPokemonsHome, listPokemonsPokedex, isHomeSet]);
 
