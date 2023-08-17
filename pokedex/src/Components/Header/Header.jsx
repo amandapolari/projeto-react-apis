@@ -21,31 +21,45 @@ const Header = () => {
     const params = useParams();
     const name = params.name;
     const [isErrorPage, setIsErrorPage] = useState(false);
-    const [showButtonAdd, setShowButtonAdd] = useState(true);
     const context = useContext(GlobalContext);
-    const { presentInPokedex, listPokemonsPokedex, setPresentInPokedex } =
-        context;
+    const {
+        listPokemonsPokedex,
+        removeItemPokedex,
+        updateList,
+        showButtonAdd,
+        setShowButtonAdd,
+        showButtonDelete,
+        setShowButtonDelete,
+    } = context;
+
+    const [isDetailsPage, setIsDetailsPage] = useState(name);
+
+    const handleAddToPokedex = () => {
+        updateList(name);
+        setIsDetailsPage(name);
+    };
+
+    const handleRemoveFromPokedex = () => {
+        removeItemPokedex(name);
+        setIsDetailsPage(name);
+    };
 
     useEffect(() => {
-        if (name && listPokemonsPokedex.length > 0) {
-            const namesPokemonsPokedex = listPokemonsPokedex.flatMap((item) =>
-                item.map((i) => i)
+        if (isDetailsPage && name) {
+            const isPresent = listPokemonsPokedex.some((item) =>
+                item.some((i) => i.name === name)
             );
-            const filteredData = namesPokemonsPokedex.filter((item) =>
-                name.includes(item.name)
-            );
-            if (filteredData.length) {
-                setPresentInPokedex(true);
-                setShowButtonAdd(false);
-            }
+            setShowButtonDelete(isPresent);
+            setShowButtonAdd(!isPresent);
         }
-    }, [listPokemonsPokedex]);
+    }, [isDetailsPage, name, listPokemonsPokedex]);
 
     useEffect(() => {
-        if (name === undefined) {
-            setPresentInPokedex(false);
+        if (isDetailsPage === undefined) {
+            setShowButtonDelete(false);
             setShowButtonAdd(false);
         }
+        setIsDetailsPage(name);
     }, []);
 
     useEffect(() => {
@@ -82,11 +96,27 @@ const Header = () => {
     };
 
     const ShowDeleteFromPokedex = () => {
-        return <DeleteFromPokedex>Excluir da Pokédex</DeleteFromPokedex>;
+        return (
+            <DeleteFromPokedex
+                onClick={() => {
+                    handleRemoveFromPokedex();
+                }}
+            >
+                Excluir da Pokédex
+            </DeleteFromPokedex>
+        );
     };
 
     const ShowAddFromPokedex = () => {
-        return <button>Adicionar a Pokedex</button>;
+        return (
+            <button
+                onClick={() => {
+                    handleAddToPokedex();
+                }}
+            >
+                Adicionar a Pokedex
+            </button>
+        );
     };
 
     return (
@@ -95,8 +125,8 @@ const Header = () => {
             {pathname === '/' ? ShowButtonPokedex() : ''}
             {pathname === '/pokedex' ? ShowButtonBack() : ''}
             {pathname === '/details' ? ShowButtonBack() : ''}
-            {presentInPokedex ? ShowDeleteFromPokedex() : ''}
             {isErrorPage ? ShowButtonBack() : ''}
+            {showButtonDelete ? ShowDeleteFromPokedex() : ''}
             {showButtonAdd ? ShowAddFromPokedex() : ''}
         </ContainerHeader>
     );

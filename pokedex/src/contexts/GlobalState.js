@@ -6,7 +6,8 @@ const GlobalState = ({ children }) => {
     const [listPokemonsHome, setListPokemonsHome] = useState([]);
     const [listPokemonsPokedex, setListPokemonsPokedex] = useState([]);
     const [dataReceivedFromApi, setDataReceivedFromApi] = useState();
-    const [presentInPokedex, setPresentInPokedex] = useState(false);
+    const [showButtonAdd, setShowButtonAdd] = useState(false);
+    const [showButtonDelete, setShowButtonDelete] = useState(false);
 
     const updateList = (name) => {
         const listFilteredForHome = listPokemonsHome.filter(
@@ -51,8 +52,10 @@ const GlobalState = ({ children }) => {
         removeItemPokedex,
         dataReceivedFromApi,
         setDataReceivedFromApi,
-        presentInPokedex,
-        setPresentInPokedex,
+        showButtonAdd,
+        setShowButtonAdd,
+        showButtonDelete,
+        setShowButtonDelete,
     };
 
     return (
