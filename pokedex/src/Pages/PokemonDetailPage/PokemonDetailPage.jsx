@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState, useContext } from 'react';
-import GlobalContext from '../../contexts/GlobalContext';
+import React, { useEffect, useState } from 'react';
 import {
     ContainerImgBack,
     ContainerImgFront,
@@ -20,34 +19,23 @@ import {
     StatValue,
 } from './PokemonDetailPageStyle';
 import Header from '../../Components/Header/Header';
-
 import { useParams } from 'react-router-dom';
 import useRequestData from '../../hooks/useRequestData';
 import Loading from '../../Components/Loading/Loading';
 import Error from '../../Components/Error/Error';
-
 import { getTypes } from '../../utils/ReturnPokemonType';
 
 const PokemonDetailPage = () => {
-    const context = useContext(GlobalContext);
-    const { listTest } = context;
-    // console.log(listTest);
     const params = useParams();
-    // todo objeto:
-    // console.log(params);
-    // acessando a propriedade id:
-    // console.log(params.id);
-
     const name = params.name;
-
     const [pokemonData, isLoading, isError] = useRequestData(`pokemon/${name}`);
-    // console.log('DETALHES', pokemonData);
-    // console.log('ID DO POKEMON', pokemonData.id);
 
     const [values, setValues] = useState({
         urlImgFront: '',
         urlImgBack: '',
     });
+
+    // ---
 
     const [listTypes, setListTypes] = useState([]);
 
@@ -60,7 +48,6 @@ const PokemonDetailPage = () => {
     const [listMoves, setListMoves] = useState([]);
     const captureMoves = () => {
         const allMoves = pokemonData.moves;
-        // console.log(allMoves);
         const arrayMoves = allMoves.map((elemento) => elemento.move.name);
         setListMoves(arrayMoves);
     };
@@ -122,8 +109,6 @@ const PokemonDetailPage = () => {
             try {
                 if (pokemonData.sprites) {
                     setValues({
-                        // urlImgFront: pokemonData.sprites.front_default,
-                        // urlImgBack: pokemonData.sprites.back_default,
                         urlImgFront:
                             pokemonData.sprites.versions['generation-v'][
                                 'black-white'
@@ -164,18 +149,10 @@ const PokemonDetailPage = () => {
                     </ContainerNameAndButton>
                     <ContainerListCardDetails>
                         <ContainerImgFront>
-                            <ContainerImgs
-                                alt=""
-                                // src={pokemonData.sprites.front_default}
-                                src={values.urlImgFront}
-                            />
+                            <ContainerImgs alt="" src={values.urlImgFront} />
                         </ContainerImgFront>
                         <ContainerImgBack>
-                            <ContainerImgs
-                                alt=""
-                                // src={pokemonData.sprites.back_default}
-                                src={values.urlImgBack}
-                            />
+                            <ContainerImgs alt="" src={values.urlImgBack} />
                         </ContainerImgBack>
                         <ContainerStats>
                             <ContainerStat>
