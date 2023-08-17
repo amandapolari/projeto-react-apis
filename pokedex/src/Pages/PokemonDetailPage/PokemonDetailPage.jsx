@@ -184,9 +184,11 @@ const PokemonDetailPage = () => {
                                 })}
                             </ContainerStat>
                             <ContainerValueStat>
-                                {listStatsValues.map((item) => {
+                                {listStatsValues.map((item, index) => {
                                     return (
-                                        <StatValue key={item}>{item}</StatValue>
+                                        <StatValue key={index}>
+                                            {item}
+                                        </StatValue>
                                     );
                                 })}
                             </ContainerValueStat>
