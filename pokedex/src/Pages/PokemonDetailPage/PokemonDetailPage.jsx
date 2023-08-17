@@ -38,10 +38,11 @@ const PokemonDetailPage = () => {
     // acessando a propriedade id:
     // console.log(params.id);
 
-    const id = params.id;
+    const name = params.name;
 
-    const [pokemonData, isLoading, isError] = useRequestData(`pokemon/${id}`);
-    // console.log('DETALHES', pokemonData);
+    const [pokemonData, isLoading, isError] = useRequestData(`pokemon/${name}`);
+    console.log('DETALHES', pokemonData);
+    console.log('ID DO POKEMON', pokemonData.id);
 
     // console.log(pokemonData);
 
@@ -90,8 +91,8 @@ const PokemonDetailPage = () => {
     const [lisName, setLisName] = useState('');
 
     const idCorrected = () => {
-        if (id) {
-            const idAjustado = id.toString();
+        if (pokemonData.id) {
+            const idAjustado = pokemonData.id.toString();
             let idCorrigido = '';
 
             switch (idAjustado.length) {
@@ -148,7 +149,7 @@ const PokemonDetailPage = () => {
         };
 
         captureDatas();
-    }, [id, pokemonData]);
+    }, [pokemonData.id, pokemonData]);
 
     return (
         <>
@@ -195,7 +196,7 @@ const PokemonDetailPage = () => {
                         </ContainerStats>
                         <ContainerImgMain>
                             <ImgMain
-                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`}
+                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonData.id}.png`}
                                 alt=""
                             />
                         </ContainerImgMain>

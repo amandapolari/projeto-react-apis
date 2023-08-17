@@ -129,7 +129,7 @@ const PokemonCard = ({ id, name, updateList }) => {
                     <ContainerButtonPokemonCard>
                         <ButtonDetailPokemonCard
                             onClick={() => {
-                                goToDetails(navegate, id);
+                                goToDetails(navegate, name);
                             }}
                         >
                             Detalhes
