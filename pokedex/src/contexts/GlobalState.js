@@ -17,7 +17,12 @@ const GlobalState = ({ children }) => {
         setShowModal(!showModal);
     }, [onOpen]);
 
+    const clearLocalStorage = () => {
+        localStorage.removeItem('pokemonsPokedex');
+    };
+    
     const saveLocalStorage = () => {
+        clearLocalStorage();
         const listPokemonsSalvesPokedex = JSON.stringify(listPokemonsPokedex);
         localStorage.setItem('pokemonsPokedex', listPokemonsSalvesPokedex);
     };
