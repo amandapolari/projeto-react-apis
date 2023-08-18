@@ -9,6 +9,26 @@ const GlobalState = ({ children }) => {
     const [showButtonAdd, setShowButtonAdd] = useState(false);
     const [showButtonDelete, setShowButtonDelete] = useState(false);
 
+    const saveLocalStorage = () => {
+        const listPokemonsSalvesPokedex = JSON.stringify(listPokemonsPokedex);
+        localStorage.setItem('pokemonsPokedex', listPokemonsSalvesPokedex);
+    };
+
+    useEffect(() => {
+        const listPokedexLocalStorage = JSON.parse(
+            localStorage.getItem('pokemonsPokedex')
+        );
+        listPokedexLocalStorage &&
+            setListPokemonsPokedex(listPokedexLocalStorage);
+    }, []);
+
+    useEffect(() => {
+        if (listPokemonsPokedex.length) {
+            saveLocalStorage();
+            console.log('salvou item no local storage');
+        }
+    }, [listPokemonsPokedex]);
+
     const updateList = (name) => {
         const listFilteredForHome = listPokemonsHome.filter(
             (pokemon) => pokemon.name !== name
