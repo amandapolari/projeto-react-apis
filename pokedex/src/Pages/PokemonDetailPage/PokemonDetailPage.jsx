@@ -24,6 +24,7 @@ import useRequestData from '../../hooks/useRequestData';
 import Loading from '../../Components/Loading/Loading';
 import Error from '../../Components/Error/Error';
 import { getTypes } from '../../utils/ReturnPokemonType';
+import { getColors } from '../../utils/ReturnCardColor';
 
 const PokemonDetailPage = () => {
     const params = useParams();
@@ -147,7 +148,7 @@ const PokemonDetailPage = () => {
                             [PÁGINA DE DETALHES] POKEMON DETAIL PAGE
                         </NamePageDetails>
                     </ContainerNameAndButton>
-                    <ContainerListCardDetails>
+                    <ContainerListCardDetails color={getColors(listTypes[0])}>
                         <ContainerImgFront>
                             <ContainerImgs alt="" src={values.urlImgFront} />
                         </ContainerImgFront>
