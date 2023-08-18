@@ -13,6 +13,7 @@ import {
 } from './HeaderStyle';
 import images from '../../assets/importImages';
 import { goToPokedex, goToHome } from '../../routes/coordinator';
+import VerticallyCenter from '../Modal/VerticallyCenter';
 
 const Header = () => {
     const location = useLocation();
@@ -30,6 +31,7 @@ const Header = () => {
         setShowButtonAdd,
         showButtonDelete,
         setShowButtonDelete,
+        showModal,
     } = context;
 
     const [isDetailsPage, setIsDetailsPage] = useState(name);
@@ -128,6 +130,7 @@ const Header = () => {
             {isErrorPage ? ShowButtonBack() : ''}
             {showButtonDelete ? ShowDeleteFromPokedex() : ''}
             {showButtonAdd ? ShowAddFromPokedex() : ''}
+            {showModal && <VerticallyCenter />}
         </ContainerHeader>
     );
 };

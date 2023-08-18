@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useDisclosure } from '@chakra-ui/react';
 import GlobalContext from './GlobalContext';
 import { useEffect, useState } from 'react';
 
@@ -8,6 +9,13 @@ const GlobalState = ({ children }) => {
     const [dataReceivedFromApi, setDataReceivedFromApi] = useState();
     const [showButtonAdd, setShowButtonAdd] = useState(false);
     const [showButtonDelete, setShowButtonDelete] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [chooseImage, setChooseImage] = useState('');
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
+    useEffect(() => {
+        setShowModal(!showModal);
+    }, [onOpen]);
 
     const saveLocalStorage = () => {
         const listPokemonsSalvesPokedex = JSON.stringify(listPokemonsPokedex);
@@ -25,7 +33,6 @@ const GlobalState = ({ children }) => {
     useEffect(() => {
         if (listPokemonsPokedex.length) {
             saveLocalStorage();
-            console.log('salvou item no local storage');
         }
     }, [listPokemonsPokedex]);
 
@@ -40,6 +47,8 @@ const GlobalState = ({ children }) => {
         );
         const newList = [...listPokemonsPokedex, listFilteredForPokedex];
         setListPokemonsPokedex(newList);
+        setChooseImage('capture');
+        onOpen();
     };
 
     const removeItemPokedex = (name) => {
@@ -47,6 +56,8 @@ const GlobalState = ({ children }) => {
             innerArray.filter((pokemon) => pokemon.name !== name)
         );
         setListPokemonsPokedex(updatedPokedex);
+        setChooseImage('remove');
+        onOpen();
     };
 
     useEffect(() => {
@@ -76,6 +87,13 @@ const GlobalState = ({ children }) => {
         setShowButtonAdd,
         showButtonDelete,
         setShowButtonDelete,
+        showModal,
+        setShowModal,
+        chooseImage,
+        setChooseImage,
+        isOpen,
+        onOpen,
+        onClose,
     };
 
     return (
