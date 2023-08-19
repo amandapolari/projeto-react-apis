@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import GlobalContext from '../../contexts/GlobalContext';
 import {
     ContainerListCardPokedex,
@@ -13,6 +13,25 @@ import Header from '../../Components/Header/Header';
 const PokedexPage = () => {
     const context = useContext(GlobalContext);
     const { listPokemonsPokedex, updateList } = context;
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 15;
+    const [totalPages, setTotalPages] = useState(0);
+
+    useEffect(() => {
+        if (listPokemonsPokedex.length === 0) {
+            const calculatedTotalPages = Math.ceil(
+                listPokemonsPokedex.length / itemsPerPage
+            );
+            setTotalPages(calculatedTotalPages);
+        }
+    }, [listPokemonsPokedex]);
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = Math.min(
+        startIndex + itemsPerPage,
+        listPokemonsPokedex.length
+    );
+    const displayedPokemons = listPokemonsPokedex.slice(startIndex, endIndex);
 
     return (
         <>
@@ -21,7 +40,7 @@ const PokedexPage = () => {
                 <NamePagePokedex>[POKEDEX] POKEDEX PAGE</NamePagePokedex>
                 <TitlePagePokedex>Meus Pokémons</TitlePagePokedex>
                 <ContainerListCardPokedex>
-                    {listPokemonsPokedex.flatMap((innerArray, index) =>
+                    {displayedPokemons.flatMap((innerArray, index) =>
                         innerArray.map((item, innerIndex) => (
                             <div key={`${index}-${innerIndex}`}>
                                 <PokemonCard
@@ -36,6 +55,20 @@ const PokedexPage = () => {
                         ))
                     )}
                 </ContainerListCardPokedex>
+                <div>
+                    <button
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                        disabled={currentPage === 1}
+                    >
+                        Página Anterior
+                    </button>
+                    <button
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                    >
+                        Próxima Página
+                    </button>
+                </div>
             </ContainerPokedexPage>
         </>
     );

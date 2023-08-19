@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable react-hooks/exhaustive-deps */
 // import React, { useEffect, useState, useContext } from 'react';
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import GlobalContext from '../../contexts/GlobalContext';
 import {
     // ContainerBtns,
@@ -24,39 +24,40 @@ const PokemonListPage = () => {
         listPokemonsPokedex,
         updateList,
         setDataReceivedFromApi,
-        isHomeSet,
     } = context;
 
-    // PAGINAÇÃO - LÓGICA:
-    //
-    // => PAGINAÇÃO:
-    // const [offset, setOffset] = useState(0);
-    // const limitPerPage = 18;
-    // const url = `pokemon?limit=${limitPerPage}&offset=${offset}`;
-    // const [data, isLoading, isError] = useRequestData(url);
-    // const loadNextPage = () => {
-    //     setOffset((prevOffset) => prevOffset + limitPerPage);
-    // };
-    // const loadPreviousPage = () => {
-    //     if (offset > 0) {
-    //         setOffset((prevOffset) => prevOffset - limitPerPage);
-    //     }
-    // };
-    // => SEM PAGINAÇÃO:
-    // const url = `pokemon?limit=${limitPerPage}&offset=${offset}`;
-
-    const [data, isLoading, isError] = useRequestData(
-        'pokemon?limit=8&offset=0'
-    );
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 15;
+    const url = `pokemon?limit=${150}&offset=${0}`;
+    const [data, isLoading, isError] = useRequestData(url);
+    const [totalPages, setTotalPages] = useState(0);
 
     useEffect(() => {
-        if (listPokemonsHome.length === 0 && data) {
+        if (listPokemonsHome.length === 0 && !isLoading && !isError && data) {
             setListPokemonsHome(data);
             setDataReceivedFromApi(data);
+
+            const calculatedTotalPages = Math.ceil(data.length / itemsPerPage);
+            setTotalPages(calculatedTotalPages);
         } else {
             setListPokemonsHome(listPokemonsHome);
         }
-    }, [data, listPokemonsHome, listPokemonsPokedex, isHomeSet]);
+    }, [
+        data,
+        isLoading,
+        isError,
+        setListPokemonsHome,
+        setDataReceivedFromApi,
+        listPokemonsPokedex,
+        listPokemonsHome,
+    ]);
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = Math.min(
+        startIndex + itemsPerPage,
+        listPokemonsHome.length
+    );
+    const displayedPokemons = listPokemonsHome.slice(startIndex, endIndex);
 
     return (
         <>
@@ -70,22 +71,7 @@ const PokemonListPage = () => {
                     ) : isError ? (
                         <Error />
                     ) : (
-                        listPokemonsHome.map((item, index) => {
-                            // console.log('TUDO:', listPokemonsHome);
-                            // console.log('ITEM:', item);
-                            // console.log('INDEX:', index);
-                            // console.log(
-                            //     'Teste NAME: ',
-                            //     listPokemonsHome[index].name
-                            // );
-                            // console.log(
-                            //     'Teste URL: ',
-                            //     listPokemonsHome[index].url
-                            // );
-                            // console.log(
-                            //     'Teste ID: ',
-                            //     item.url.match(/\/(\d+)\//)[1]
-                            // );
+                        displayedPokemons.map((item, index) => {
                             return (
                                 <PokemonCard
                                     key={index}
@@ -100,13 +86,20 @@ const PokemonListPage = () => {
                         })
                     )}
                 </ContainerListCardPokemon>
-                {/* PAGINAÇÃO - BTNS:
-                <ContainerBtns>
-                    <button onClick={loadPreviousPage} disabled={offset === 0}>
+                <div>
+                    <button
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                        disabled={currentPage === 1}
+                    >
                         Página Anterior
                     </button>
-                    <button onClick={loadNextPage}>Próxima Página</button>
-                </ContainerBtns> */}
+                    <button
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                    >
+                        Próxima Página
+                    </button>
+                </div>
             </ContainerPokemonListPage>
         </>
     );
