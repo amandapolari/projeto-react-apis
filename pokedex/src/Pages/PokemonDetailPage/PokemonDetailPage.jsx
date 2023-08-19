@@ -19,32 +19,24 @@ import {
     StatValue,
 } from './PokemonDetailPageStyle';
 import Header from '../../Components/Header/Header';
-
 import { useParams } from 'react-router-dom';
 import useRequestData from '../../hooks/useRequestData';
 import Loading from '../../Components/Loading/Loading';
 import Error from '../../Components/Error/Error';
-
 import { getTypes } from '../../utils/ReturnPokemonType';
+import { getColors } from '../../utils/ReturnCardColor';
 
 const PokemonDetailPage = () => {
     const params = useParams();
-    // todo objeto:
-    // console.log(params);
-    // acessando a propriedade id:
-    // console.log(params.id);
-
-    const id = params.id;
-
-    const [pokemonData, isLoading, isError] = useRequestData(`pokemon/${id}`);
-    // console.log('DETALHES', pokemonData);
-
-    // console.log(pokemonData);
+    const name = params.name;
+    const [pokemonData, isLoading, isError] = useRequestData(`pokemon/${name}`);
 
     const [values, setValues] = useState({
         urlImgFront: '',
         urlImgBack: '',
     });
+
+    // ---
 
     const [listTypes, setListTypes] = useState([]);
 
@@ -57,7 +49,6 @@ const PokemonDetailPage = () => {
     const [listMoves, setListMoves] = useState([]);
     const captureMoves = () => {
         const allMoves = pokemonData.moves;
-        // console.log(allMoves);
         const arrayMoves = allMoves.map((elemento) => elemento.move.name);
         setListMoves(arrayMoves);
     };
@@ -86,8 +77,8 @@ const PokemonDetailPage = () => {
     const [lisName, setLisName] = useState('');
 
     const idCorrected = () => {
-        if (id) {
-            const idAjustado = id.toString();
+        if (pokemonData.id) {
+            const idAjustado = pokemonData.id.toString();
             let idCorrigido = '';
 
             switch (idAjustado.length) {
@@ -119,8 +110,6 @@ const PokemonDetailPage = () => {
             try {
                 if (pokemonData.sprites) {
                     setValues({
-                        // urlImgFront: pokemonData.sprites.front_default,
-                        // urlImgBack: pokemonData.sprites.back_default,
                         urlImgFront:
                             pokemonData.sprites.versions['generation-v'][
                                 'black-white'
@@ -136,7 +125,6 @@ const PokemonDetailPage = () => {
                     captureMoves();
                     captureStats();
                     captureStatsValues();
-                    // console.log('Esta capturando');
                 }
             } catch (error) {
                 console.log(error);
@@ -144,7 +132,7 @@ const PokemonDetailPage = () => {
         };
 
         captureDatas();
-    }, [id, pokemonData]);
+    }, [pokemonData.id, pokemonData]);
 
     return (
         <>
@@ -160,20 +148,12 @@ const PokemonDetailPage = () => {
                             [PÁGINA DE DETALHES] POKEMON DETAIL PAGE
                         </NamePageDetails>
                     </ContainerNameAndButton>
-                    <ContainerListCardDetails>
+                    <ContainerListCardDetails color={getColors(listTypes[0])}>
                         <ContainerImgFront>
-                            <ContainerImgs
-                                alt=""
-                                // src={pokemonData.sprites.front_default}
-                                src={values.urlImgFront}
-                            />
+                            <ContainerImgs alt="" src={values.urlImgFront} />
                         </ContainerImgFront>
                         <ContainerImgBack>
-                            <ContainerImgs
-                                alt=""
-                                // src={pokemonData.sprites.back_default}
-                                src={values.urlImgBack}
-                            />
+                            <ContainerImgs alt="" src={values.urlImgBack} />
                         </ContainerImgBack>
                         <ContainerStats>
                             <ContainerStat>
@@ -182,16 +162,18 @@ const PokemonDetailPage = () => {
                                 })}
                             </ContainerStat>
                             <ContainerValueStat>
-                                {listStatsValues.map((item) => {
+                                {listStatsValues.map((item, index) => {
                                     return (
-                                        <StatValue key={item}>{item}</StatValue>
+                                        <StatValue key={index}>
+                                            {item}
+                                        </StatValue>
                                     );
                                 })}
                             </ContainerValueStat>
                         </ContainerStats>
                         <ContainerImgMain>
                             <ImgMain
-                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`}
+                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonData.id}.png`}
                                 alt=""
                             />
                         </ContainerImgMain>

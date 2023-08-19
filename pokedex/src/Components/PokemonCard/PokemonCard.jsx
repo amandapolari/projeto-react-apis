@@ -1,5 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import GlobalContext from '../../contexts/GlobalContext';
+
 import {
     ButtonAddPokemonCard,
     ButtonDetailPokemonCard,
@@ -12,25 +14,30 @@ import {
     ContainerTypes,
 } from './PokemonCardStyle';
 import { goToDetails } from '../../routes/coordinator';
-// import { useLocation } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useRequestData from '../../hooks/useRequestData';
 import Loading from '../Loading/Loading';
-import Error from '../Error/Error';
+// import Error from '../Error/Error';
 import { getTypes } from '../../utils/ReturnPokemonType';
 import { getColors } from '../../utils/ReturnCardColor';
 
 const PokemonCard = ({ id, name, updateList }) => {
-    const navegate = useNavigate();
+    const context = useContext(GlobalContext);
+    const { removeItemPokedex } = context;
 
-    // const location = useLocation();
-    // let id;
-    // if (location.pathname === '/') {
-    //     // console.log('estamos na HOME');
-    //     id = url && url.match(/\/(\d+)\//)[1];
-    // } else {
-    //     // console.log('NÃO ESTAMOS NA HOME');
-    // }
+    const navegate = useNavigate();
+    const location = useLocation();
+    const { pathname } = location;
+
+    const [isHome, SetIsHome] = useState(true);
+
+    useEffect(() => {
+        if (pathname === '/') {
+            SetIsHome(true);
+        } else if (pathname === '/pokedex') {
+            SetIsHome(false);
+        }
+    }, []);
 
     const adjustedName = name && name.charAt(0).toUpperCase() + name.slice(1);
 
@@ -88,7 +95,8 @@ const PokemonCard = ({ id, name, updateList }) => {
             {isLoading ? (
                 <Loading />
             ) : isError ? (
-                <Error />
+                // <Error />
+                'Erro na requisição'
             ) : (
                 <>
                     <ParagraphPokemonId>{idPokemon}</ParagraphPokemonId>
@@ -104,24 +112,35 @@ const PokemonCard = ({ id, name, updateList }) => {
                             );
                         })}
                     </ContainerTypes>
-                    <ImgPokemons src={imageUrl} alt={`Imagem do ${adjustedName}`} />
+                    <ImgPokemons
+                        src={imageUrl}
+                        alt={`Imagem do ${adjustedName}`}
+                    />
                     <ContainerButtonPokemonCard>
                         <ButtonDetailPokemonCard
                             onClick={() => {
-                                goToDetails(navegate, id);
+                                goToDetails(navegate, name);
                             }}
                         >
                             Detalhes
                         </ButtonDetailPokemonCard>
-                        <ButtonAddPokemonCard
-                            onClick={() => {
-                                // REMOVENDO POR NOME
-                                // updateList(name);
-                                updateList(id);
-                            }}
-                        >
-                            Capturar!
-                        </ButtonAddPokemonCard>
+                        {isHome ? (
+                            <ButtonAddPokemonCard
+                                onClick={() => {
+                                    updateList(name);
+                                }}
+                            >
+                                Capturar!
+                            </ButtonAddPokemonCard>
+                        ) : (
+                            <ButtonAddPokemonCard
+                                onClick={() => {
+                                    removeItemPokedex(name);
+                                }}
+                            >
+                                Excluir!
+                            </ButtonAddPokemonCard>
+                        )}
                     </ContainerButtonPokemonCard>
                 </>
             )}

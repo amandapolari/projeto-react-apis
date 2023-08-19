@@ -22,6 +22,10 @@ export const ContainerListCardDetails = styled.div`
     display: grid;
     grid-template: 1fr 1fr 1fr 1fr / 1fr 1fr 1fr;
     gap: 2vh;
+    border: 1px solid black;
+    height: 70vh;
+    width: 70vw;
+    background-color: ${({ color }) => color};
 `;
 
 export const ContainerImgFront = styled.div`

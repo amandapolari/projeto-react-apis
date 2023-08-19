@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState, useContext } from 'react';
+import GlobalContext from '../../contexts/GlobalContext';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
     ButtonBack,
     ButtonPokedex,
@@ -11,12 +13,56 @@ import {
 } from './HeaderStyle';
 import images from '../../assets/importImages';
 import { goToPokedex, goToHome } from '../../routes/coordinator';
+import VerticallyCenter from '../Modal/VerticallyCenter';
 
 const Header = () => {
     const location = useLocation();
     const navegate = useNavigate();
     const pathname = location.pathname;
+    const params = useParams();
+    const name = params.name;
     const [isErrorPage, setIsErrorPage] = useState(false);
+    const context = useContext(GlobalContext);
+    const {
+        listPokemonsPokedex,
+        removeItemPokedex,
+        updateList,
+        showButtonAdd,
+        setShowButtonAdd,
+        showButtonDelete,
+        setShowButtonDelete,
+        showModal,
+    } = context;
+
+    const [isDetailsPage, setIsDetailsPage] = useState(name);
+
+    const handleAddToPokedex = () => {
+        updateList(name);
+        setIsDetailsPage(name);
+    };
+
+    const handleRemoveFromPokedex = () => {
+        removeItemPokedex(name);
+        setIsDetailsPage(name);
+    };
+
+    useEffect(() => {
+        if (isDetailsPage && name) {
+            const isPresent = listPokemonsPokedex.some((item) =>
+                item.some((i) => i.name === name)
+            );
+            setShowButtonDelete(isPresent);
+            setShowButtonAdd(!isPresent);
+        }
+    }, [isDetailsPage, name, listPokemonsPokedex]);
+
+    useEffect(() => {
+        if (isDetailsPage === undefined) {
+            setShowButtonDelete(false);
+            setShowButtonAdd(false);
+        }
+        setIsDetailsPage(name);
+    }, []);
 
     useEffect(() => {
         pathname !== '/' && pathname !== '/pokedex' && pathname !== '/details'
@@ -52,7 +98,27 @@ const Header = () => {
     };
 
     const ShowDeleteFromPokedex = () => {
-        return <DeleteFromPokedex>Excluir da Pokédex</DeleteFromPokedex>;
+        return (
+            <DeleteFromPokedex
+                onClick={() => {
+                    handleRemoveFromPokedex();
+                }}
+            >
+                Excluir da Pokédex
+            </DeleteFromPokedex>
+        );
+    };
+
+    const ShowAddFromPokedex = () => {
+        return (
+            <button
+                onClick={() => {
+                    handleAddToPokedex();
+                }}
+            >
+                Adicionar a Pokedex
+            </button>
+        );
     };
 
     return (
@@ -61,8 +127,10 @@ const Header = () => {
             {pathname === '/' ? ShowButtonPokedex() : ''}
             {pathname === '/pokedex' ? ShowButtonBack() : ''}
             {pathname === '/details' ? ShowButtonBack() : ''}
-            {pathname === '/details' ? ShowDeleteFromPokedex() : ''}
             {isErrorPage ? ShowButtonBack() : ''}
+            {showButtonDelete ? ShowDeleteFromPokedex() : ''}
+            {showButtonAdd ? ShowAddFromPokedex() : ''}
+            {showModal && <VerticallyCenter />}
         </ContainerHeader>
     );
 };

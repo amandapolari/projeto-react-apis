@@ -4,12 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { GlobalStyle } from './GlobalStyle';
+import { ChakraBaseProvider, theme } from '@chakra-ui/react';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <GlobalStyle />
-        <App />
+        <ChakraBaseProvider theme={theme}>
+            <GlobalStyle />
+            <App />
+        </ChakraBaseProvider>
     </React.StrictMode>
 );
 
