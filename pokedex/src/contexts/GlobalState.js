@@ -20,7 +20,7 @@ const GlobalState = ({ children }) => {
     const clearLocalStorage = () => {
         localStorage.removeItem('pokemonsPokedex');
     };
-    
+
     const saveLocalStorage = () => {
         clearLocalStorage();
         const listPokemonsSalvesPokedex = JSON.stringify(listPokemonsPokedex);
@@ -63,6 +63,8 @@ const GlobalState = ({ children }) => {
         setListPokemonsPokedex(updatedPokedex);
         setChooseImage('remove');
         onOpen();
+        clearLocalStorage();
+        saveLocalStorage();
     };
 
     useEffect(() => {
