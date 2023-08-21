@@ -27,7 +27,8 @@ const PokemonListPage = () => {
     } = context;
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 15;
+    // É UM PRÉ-REQUISITO TER AO MENOS 20 POKEMONS NA HOME
+    const itemsPerPage = 20;
     const url = `pokemon?limit=${150}&offset=${0}`;
     const [data, isLoading, isError] = useRequestData(url);
     const [totalPages, setTotalPages] = useState(0);
