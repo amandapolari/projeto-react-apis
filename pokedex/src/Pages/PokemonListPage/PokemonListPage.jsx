@@ -1,13 +1,10 @@
-/* eslint-disable no-use-before-define */
-/* eslint-disable react-hooks/exhaustive-deps */
-// import React, { useEffect, useState, useContext } from 'react';
 import React, { useEffect, useContext, useState } from 'react';
 import GlobalContext from '../../contexts/GlobalContext';
 import {
-    // ContainerBtns,
+    ContainerBtns,
     ContainerListCardPokemon,
     ContainerPokemonListPage,
-    NamePageHome,
+    DivIconsBtns,
     TitlePageHome,
 } from './PokemonListPageStyle';
 import PokemonCard from '../../Components/PokemonCard/PokemonCard';
@@ -15,6 +12,7 @@ import Header from '../../Components/Header/Header';
 import useRequestData from '../../hooks/useRequestData';
 import Error from '../../Components/Error/Error';
 import Loading from '../../Components/Loading/Loading';
+import { CiCircleChevLeft, CiCircleChevRight } from 'react-icons/ci';
 
 const PokemonListPage = () => {
     const context = useContext(GlobalContext);
@@ -27,8 +25,7 @@ const PokemonListPage = () => {
     } = context;
 
     const [currentPage, setCurrentPage] = useState(1);
-    // É UM PRÉ-REQUISITO TER AO MENOS 20 POKEMONS NA HOME
-    const itemsPerPage = 20;
+    const itemsPerPage = 21;
     const url = `pokemon?limit=${150}&offset=${0}`;
     const [data, isLoading, isError] = useRequestData(url);
     const [totalPages, setTotalPages] = useState(0);
@@ -64,7 +61,6 @@ const PokemonListPage = () => {
         <>
             <Header />
             <ContainerPokemonListPage>
-                <NamePageHome>[HOME] POKEMON LIST PAGE</NamePageHome>
                 <TitlePageHome>Todos os Pokémons</TitlePageHome>
                 <ContainerListCardPokemon>
                     {isLoading ? (
@@ -87,20 +83,24 @@ const PokemonListPage = () => {
                         })
                     )}
                 </ContainerListCardPokemon>
-                <div>
+                <ContainerBtns>
                     <button
                         onClick={() => setCurrentPage(currentPage - 1)}
                         disabled={currentPage === 1}
                     >
-                        Página Anterior
+                        <DivIconsBtns>
+                            <CiCircleChevLeft />
+                        </DivIconsBtns>
                     </button>
                     <button
                         onClick={() => setCurrentPage(currentPage + 1)}
                         disabled={currentPage === totalPages}
                     >
-                        Próxima Página
+                        <DivIconsBtns>
+                            <CiCircleChevRight />
+                        </DivIconsBtns>
                     </button>
-                </div>
+                </ContainerBtns>
             </ContainerPokemonListPage>
         </>
     );

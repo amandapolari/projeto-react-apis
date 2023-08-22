@@ -1,22 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import {
+    ContainerAllStats,
     ContainerImgBack,
     ContainerImgFront,
     ContainerImgMain,
+    ContainerImgTypeDetails,
     ContainerImgs,
     ContainerListCardDetails,
+    ContainerMiniImages,
     ContainerMoves,
-    ContainerNameAndButton,
     ContainerPokemonDetailPage,
-    ContainerStat,
-    ContainerStats,
     ContainerTypes,
-    ContainerValueStat,
+    ContainerValueAndStat,
+    IdDetails,
     ImgMain,
+    ImgTypeDetails,
+    Move,
+    NameDetails,
     NamePageDetails,
     Stat,
     StatValue,
+    TitleMoves,
+    TitleStats,
 } from './PokemonDetailPageStyle';
 import Header from '../../Components/Header/Header';
 import { useParams } from 'react-router-dom';
@@ -25,21 +31,18 @@ import Loading from '../../Components/Loading/Loading';
 import Error from '../../Components/Error/Error';
 import { getTypes } from '../../utils/ReturnPokemonType';
 import { getColors } from '../../utils/ReturnCardColor';
+import { Divider, Progress, Stack } from '@chakra-ui/react';
 
 const PokemonDetailPage = () => {
     const params = useParams();
     const name = params.name;
     const [pokemonData, isLoading, isError] = useRequestData(`pokemon/${name}`);
-
     const [values, setValues] = useState({
         urlImgFront: '',
         urlImgBack: '',
     });
 
-    // ---
-
     const [listTypes, setListTypes] = useState([]);
-
     const captureTypes = () => {
         const allTypes = pokemonData.types;
         const arrayTypes = allTypes.map((elemento) => elemento.type.name);
@@ -53,15 +56,6 @@ const PokemonDetailPage = () => {
         setListMoves(arrayMoves);
     };
 
-    // ---
-
-    const [listStats, setListStats] = useState([]);
-    const captureStats = () => {
-        const allStats = pokemonData.stats;
-        const arrayStats = allStats.map((elemento) => elemento.stat.name);
-        setListStats(arrayStats);
-    };
-
     const [listStatsValues, setListStatsValues] = useState([]);
     const captureStatsValues = () => {
         const allStatsValues = pokemonData.stats;
@@ -71,7 +65,22 @@ const PokemonDetailPage = () => {
         setListStatsValues(arrayStatsValues);
     };
 
-    // ---
+    const [listAllStats, setListAllStats] = useState([]);
+    const captureAllStats = () => {
+        const allStats = pokemonData.stats;
+        const arrayStats = allStats.map((elemento) => {
+            // console.log(elemento);
+            // console.log('name stat:', elemento.stat.name);
+            // console.log('value stat:', elemento.base_stat);
+            return elemento;
+        });
+        setListAllStats(arrayStats);
+    };
+
+    const sum = listStatsValues.reduce((accumulator, item) => {
+        const sum = accumulator + item;
+        return sum;
+    }, 0);
 
     const [lisIdPokemon, setLisIdPokemon] = useState('');
     const [lisName, setLisName] = useState('');
@@ -123,8 +132,8 @@ const PokemonDetailPage = () => {
                     idCorrected();
                     nameCorrected();
                     captureMoves();
-                    captureStats();
                     captureStatsValues();
+                    captureAllStats();
                 }
             } catch (error) {
                 console.log(error);
@@ -143,34 +152,61 @@ const PokemonDetailPage = () => {
                 <Error />
             ) : (
                 <ContainerPokemonDetailPage>
-                    <ContainerNameAndButton>
-                        <NamePageDetails>
-                            [PÁGINA DE DETALHES] POKEMON DETAIL PAGE
-                        </NamePageDetails>
-                    </ContainerNameAndButton>
+                    <NamePageDetails>Detalhes</NamePageDetails>
                     <ContainerListCardDetails color={getColors(listTypes[0])}>
-                        <ContainerImgFront>
-                            <ContainerImgs alt="" src={values.urlImgFront} />
-                        </ContainerImgFront>
-                        <ContainerImgBack>
-                            <ContainerImgs alt="" src={values.urlImgBack} />
-                        </ContainerImgBack>
-                        <ContainerStats>
-                            <ContainerStat>
-                                {listStats.map((item) => {
-                                    return <Stat key={item}>{`${item}:`}</Stat>;
-                                })}
-                            </ContainerStat>
-                            <ContainerValueStat>
-                                {listStatsValues.map((item, index) => {
-                                    return (
-                                        <StatValue key={index}>
-                                            {item}
-                                        </StatValue>
-                                    );
-                                })}
-                            </ContainerValueStat>
-                        </ContainerStats>
+                        <ContainerMiniImages>
+                            <ContainerImgFront>
+                                <ContainerImgs
+                                    alt=""
+                                    src={values.urlImgFront}
+                                />
+                            </ContainerImgFront>
+                            <ContainerImgBack>
+                                <ContainerImgs alt="" src={values.urlImgBack} />
+                            </ContainerImgBack>
+                        </ContainerMiniImages>
+                        <ContainerAllStats>
+                            <TitleStats>Base stats</TitleStats>
+                            {listAllStats.map((element, index) => {
+                                return (
+                                    <>
+                                        <Divider marginTop="0.1vh" />
+                                        <ContainerValueAndStat key={index}>
+                                            <Stat>{element.stat.name}</Stat>
+
+                                            <StatValue>
+                                                {element.base_stat}
+                                            </StatValue>
+                                            <Stack
+                                                justifyContent="start"
+                                                spacing={5}
+                                            >
+                                                <Progress
+                                                    colorScheme={
+                                                        element.base_stat < 50
+                                                            ? 'pink'
+                                                            : 'blue'
+                                                    }
+                                                    size="sm"
+                                                    value={element.base_stat}
+                                                    borderRadius="3px"
+                                                    w="90%"
+                                                    textAlign="end"
+                                                />
+                                            </Stack>
+                                        </ContainerValueAndStat>
+                                    </>
+                                );
+                            })}
+                            <Divider marginTop="0.1vh" />
+                            <ContainerValueAndStat>
+                                <Stat>Total</Stat>
+                                <StatValue>
+                                    <strong>{sum && sum}</strong>
+                                </StatValue>
+                            </ContainerValueAndStat>
+                            <Divider marginTop="0.1vh" />
+                        </ContainerAllStats>
                         <ContainerImgMain>
                             <ImgMain
                                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonData.id}.png`}
@@ -178,23 +214,24 @@ const PokemonDetailPage = () => {
                             />
                         </ContainerImgMain>
                         <ContainerTypes>
-                            <p>{lisIdPokemon}</p>
-                            <p>{lisName}</p>
-                            <div>
+                            <IdDetails>{lisIdPokemon}</IdDetails>
+                            <NameDetails>{lisName}</NameDetails>
+                            <ContainerImgTypeDetails>
                                 {listTypes.map((type) => {
                                     return (
-                                        <img
+                                        <ImgTypeDetails
                                             key={type}
                                             src={getTypes(type)}
                                             alt="img"
-                                        ></img>
+                                        ></ImgTypeDetails>
                                     );
                                 })}
-                            </div>
+                            </ContainerImgTypeDetails>
                         </ContainerTypes>
                         <ContainerMoves>
+                            <TitleMoves>Moves:</TitleMoves>
                             {listMoves.map((move) => {
-                                return <p key={move}>{move}</p>;
+                                return <Move key={move}>{move}</Move>;
                             })}
                         </ContainerMoves>
                     </ContainerListCardDetails>

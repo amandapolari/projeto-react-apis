@@ -111,13 +111,13 @@ const Header = () => {
 
     const ShowAddFromPokedex = () => {
         return (
-            <button
+            <ButtonPokedex
                 onClick={() => {
                     handleAddToPokedex();
                 }}
             >
                 Adicionar a Pokedex
-            </button>
+            </ButtonPokedex>
         );
     };
 
