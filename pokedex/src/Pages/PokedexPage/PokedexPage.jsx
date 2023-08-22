@@ -4,11 +4,15 @@ import GlobalContext from '../../contexts/GlobalContext';
 import {
     ContainerListCardPokedex,
     ContainerPokedexPage,
-    NamePagePokedex,
     TitlePagePokedex,
 } from './PokedexPageStyle';
 import PokemonCard from '../../Components/PokemonCard/PokemonCard';
 import Header from '../../Components/Header/Header';
+import {
+    ContainerBtns,
+    DivIconsBtns,
+} from '../PokemonListPage/PokemonListPageStyle';
+import { CiCircleChevLeft, CiCircleChevRight } from 'react-icons/ci';
 
 const PokedexPage = () => {
     const context = useContext(GlobalContext);
@@ -37,7 +41,6 @@ const PokedexPage = () => {
         <>
             <Header />
             <ContainerPokedexPage>
-                <NamePagePokedex>[POKEDEX] POKEDEX PAGE</NamePagePokedex>
                 <TitlePagePokedex>Meus Pokémons</TitlePagePokedex>
                 <ContainerListCardPokedex>
                     {displayedPokemons.flatMap((innerArray, index) =>
@@ -55,20 +58,24 @@ const PokedexPage = () => {
                         ))
                     )}
                 </ContainerListCardPokedex>
-                <div>
+                <ContainerBtns>
                     <button
                         onClick={() => setCurrentPage(currentPage - 1)}
                         disabled={currentPage === 1}
                     >
-                        Página Anterior
+                        <DivIconsBtns>
+                            <CiCircleChevLeft />
+                        </DivIconsBtns>
                     </button>
                     <button
                         onClick={() => setCurrentPage(currentPage + 1)}
                         disabled={currentPage === totalPages}
                     >
-                        Próxima Página
+                        <DivIconsBtns>
+                            <CiCircleChevRight />
+                        </DivIconsBtns>
                     </button>
-                </div>
+                </ContainerBtns>
             </ContainerPokedexPage>
         </>
     );

@@ -5,6 +5,7 @@ import error from './images/error.gif';
 import loading from './images/loading.gif';
 import capture from './images/capture.png';
 import remove from './images/remove.png';
+import pokeball from './images/pokeball.png';
 
 const images = {
     logo,
@@ -14,6 +15,7 @@ const images = {
     loading,
     capture,
     remove,
+    pokeball,
 };
 
 export default images;

@@ -1,10 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useContext } from 'react';
 import GlobalContext from '../../contexts/GlobalContext';
-
 import {
-    ButtonAddPokemonCard,
-    ButtonDetailPokemonCard,
     ContainerButtonPokemonCard,
     ContainerPokemonCard,
     ImgPokemons,
@@ -12,14 +9,16 @@ import {
     NamePokemon,
     ParagraphPokemonId,
     ContainerTypes,
+    ContainerImage,
 } from './PokemonCardStyle';
 import { goToDetails } from '../../routes/coordinator';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useRequestData from '../../hooks/useRequestData';
 import Loading from '../Loading/Loading';
-// import Error from '../Error/Error';
+import Error from '../Error/Error';
 import { getTypes } from '../../utils/ReturnPokemonType';
 import { getColors } from '../../utils/ReturnCardColor';
+import { Button } from '@chakra-ui/react';
 
 const PokemonCard = ({ id, name, updateList }) => {
     const context = useContext(GlobalContext);
@@ -95,8 +94,7 @@ const PokemonCard = ({ id, name, updateList }) => {
             {isLoading ? (
                 <Loading />
             ) : isError ? (
-                // <Error />
-                'Erro na requisição'
+                <Error />
             ) : (
                 <>
                     <ParagraphPokemonId>{idPokemon}</ParagraphPokemonId>
@@ -112,34 +110,46 @@ const PokemonCard = ({ id, name, updateList }) => {
                             );
                         })}
                     </ContainerTypes>
-                    <ImgPokemons
-                        src={imageUrl}
-                        alt={`Imagem do ${adjustedName}`}
-                    />
+                    <ContainerImage>
+                        <ImgPokemons
+                            src={imageUrl}
+                            alt={`Imagem do ${adjustedName}`}
+                        />
+                    </ContainerImage>
                     <ContainerButtonPokemonCard>
-                        <ButtonDetailPokemonCard
+                        <Button
+                            variant="link"
+                            color="white"
+                            textDecorationLine="underline"
+                            fontWeight="700"
+                            fontFamily="Poppins"
+                            fontSize="16px"
+                            text-decoration-line=" underline"
                             onClick={() => {
                                 goToDetails(navegate, name);
                             }}
                         >
                             Detalhes
-                        </ButtonDetailPokemonCard>
+                        </Button>
                         {isHome ? (
-                            <ButtonAddPokemonCard
+                            <Button
+                                variant="add"
+                                h="4.9vh"
                                 onClick={() => {
                                     updateList(name);
                                 }}
                             >
                                 Capturar!
-                            </ButtonAddPokemonCard>
+                            </Button>
                         ) : (
-                            <ButtonAddPokemonCard
+                            <Button
+                                variant="delete"
                                 onClick={() => {
                                     removeItemPokedex(name);
                                 }}
                             >
                                 Excluir!
-                            </ButtonAddPokemonCard>
+                            </Button>
                         )}
                     </ContainerButtonPokemonCard>
                 </>
